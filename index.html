@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Bruch-Diagnosetrainer – vollständige Version</title>
+<title>Bruch-Diagnosetrainer – Version 2</title>
 <style>
 :root{--navy:#17365d;--blue:#eaf3fb;--yellow:#fff5cf;--green:#dff3e4;--amber:#fff0b8;--red:#f8d7da;--ink:#1e293b;--muted:#64748b;--line:#cbd5e1}
 *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink);background:#f7f9fc}
@@ -14,7 +14,7 @@ h1,h2,h3{color:var(--navy);margin-top:0}h1{font-size:clamp(1.8rem,5vw,3rem)}h2{f
 .lead{font-size:1.12rem;line-height:1.6}.muted{color:var(--muted)}button,.choice{min-height:52px;border:0;border-radius:13px;padding:13px 18px;font-size:1rem;cursor:pointer;touch-action:manipulation}
 .primary{background:var(--navy);color:white;font-weight:700}.secondary{background:#edf2f7;color:var(--navy);font-weight:650}.choice{display:block;width:100%;text-align:left;background:#f8fafc;border:2px solid #dbe4ef;margin:10px 0}
 .choice:hover,.choice:focus{border-color:#7aa2ce}.choice.selected{border-color:var(--navy);background:var(--blue)}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.taskbox{background:var(--blue);padding:22px;border-radius:16px;margin:18px 0}.helpbox{background:var(--yellow);padding:18px;border-radius:14px;margin:18px 0}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.taskbox{background:var(--blue);padding:22px;border-radius:16px;margin:18px 0}.helpbox{background:var(--yellow);padding:18px;border-radius:14px;margin:18px 0}.practice-card{background:white;border:2px solid #dbe4ef;border-radius:16px;padding:20px;margin:16px 0}.practice-card .visual{margin:16px 0}.support{display:none;background:var(--yellow);border-radius:12px;padding:14px;margin-top:12px}.support.show{display:block}.tipbtn,.helpbtn{background:#edf2f7;color:var(--navy);font-weight:700}.circlefrac{width:150px;height:150px;border-radius:50%;border:3px solid var(--navy);margin:14px auto;position:relative;overflow:hidden;background:#fff}.dots{display:grid;grid-template-columns:repeat(5,44px);gap:10px;justify-content:center;margin:16px 0}.dotitem{width:42px;height:42px;border-radius:50%;border:2px solid var(--navy);background:#fff}.dotitem.fill{background:#8fb9df}.mini-note{font-size:.92rem;color:var(--muted);margin-top:8px}
 .frac{display:inline-grid;grid-template-rows:auto 2px auto;vertical-align:middle;text-align:center;line-height:1.05;margin:0 .12em;min-width:1.2em}.frac .bar{background:currentColor;width:100%}.frac .top,.frac .bot{padding:.06em .12em}
 .mathbig{font-size:2rem;text-align:center;margin:22px 0}.strip{display:flex;height:52px;border:2px solid var(--navy);border-radius:7px;overflow:hidden;margin:10px 0}.strip span{flex:1;border-right:1px solid var(--navy)}.strip span:last-child{border:0}.strip .fill{background:#8fb9df}
 .numline{position:relative;height:84px;margin:24px 12px}.numline .axis{position:absolute;left:2%;right:2%;top:36px;height:3px;background:var(--navy)}.tick{position:absolute;top:29px;width:2px;height:17px;background:var(--navy)}.tick label{position:absolute;top:20px;transform:translateX(-45%);white-space:nowrap}.dot{position:absolute;top:24px;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--navy);transform:translateX(-50%);cursor:pointer}
@@ -70,7 +70,7 @@ function strip(n,k){return `<div class="strip" aria-label="${k} von ${n} Teilen 
 let state={i:0,stage:"q",sel:null,res:{},evidence:{},mode:"diagnose",redo:[],cycle:0};
 const app=document.querySelector("#app"),phase=document.querySelector("#phase"),prog=document.querySelector("#prog");
 function start(){state={i:0,stage:"q",sel:null,res:{},evidence:{},mode:"diagnose",redo:[],cycle:0};renderTask()}
-function home(){phase.textContent="Start";prog.style.width="0";app.innerHTML=`<h1>Bruch-Check</h1><p class="lead">Der Bruch-Check untersucht sieben zentrale Grundvorstellungen zu Brüchen. Die Diagnose läuft neutral und ohne richtig/falsch-Rückmeldung. Anschließend erhältst du ein persönliches Profil, passende Förderaufgaben und – falls nötig – einen kurzen Bruchprofi-Check.</p><div class="helpbox"><b>Wichtig:</b> Es geht nicht um eine Note. Wenn du unsicher bist, kannst du das sagen. Während des Checks bekommst du bewusst keine Lösungshinweise.</div><div class="actions"><button class="primary" onclick="start()">Bruch-Check starten</button></div><p class="muted small">Vollständige Einzeldatei · für iPad/Tablet, Desktop und Smartphone · keine Anmeldung erforderlich</p>`}
+function home(){phase.textContent="Start";prog.style.width="0";app.innerHTML=`<h1>Bruch-Check</h1><p class="lead">Der Bruch-Check untersucht sieben zentrale Grundvorstellungen zu Brüchen. Die Diagnose läuft neutral und ohne richtig/falsch-Rückmeldung. Anschließend erhältst du ein persönliches Profil, mindestens zwei passende Förderaufgaben je Förderbereich mit Tipp- und Hilfe-Schaltflächen sowie – falls nötig – einen kurzen Bruchprofi-Check.</p><div class="helpbox"><b>Wichtig:</b> Es geht nicht um eine Note. Wenn du unsicher bist, kannst du das sagen. Während des Checks bekommst du bewusst keine Lösungshinweise.</div><div class="actions"><button class="primary" onclick="start()">Bruch-Check starten</button></div><p class="muted small">Version 2 · adaptive Diagnose · individuelle Förderung · Tipp & Hilfe · mehr Grafiken · iPad/Tablet/Desktop</p>`}
 function renderTask(){
  let d=dims[state.i],x=d[state.stage]; phase.textContent=state.mode==="retest"?"Bruchprofi-Check":"Diagnose";
  prog.style.width=`${Math.round((state.i+0.2)/dims.length*100)}%`;
@@ -107,19 +107,89 @@ function results(){
 }
 function practice(){
  state.redo=dims.filter(d=>state.res[d.id]!=="A").map(d=>d.id);phase.textContent="Förderung";
- let blocks=state.redo.map(id=>{let d=dims.find(x=>x.id===id);return `<div class="helpbox"><h3>${d.name}</h3><p><b>Daran arbeitest du jetzt:</b> ${d.goal}</p><p>${practiceText(id)}</p></div>`}).join("");
- app.innerHTML=`<h1>Jetzt wird geübt</h1><p class="lead">Hier darfst du ausprobieren, nachdenken und Hilfen nutzen. Geübt werden nur die Bereiche, bei denen dein Check Förderbedarf gezeigt hat.</p>${blocks}<div class="actions"><button class="primary" onclick="beginRetest()">Ich habe meine Förderaufgaben bearbeitet. Jetzt will ich zeigen, was ich kann!</button><button class="secondary" onclick="window.print()">Meine Förderaufgaben als PDF</button></div><p class="muted">Im Bruchprofi-Check prüfen wir nur diese Bereiche noch einmal – mit neuen Aufgaben.</p>`;
+ let blocks=state.redo.map(id=>practiceBlock(id)).join("");
+ app.innerHTML=`<h1>Jetzt wird geübt</h1>
+ <p class="lead">Du bekommst nur Aufgaben zu Bereichen, in denen dein Bruch-Check Förderbedarf gezeigt hat. Zu jedem Förderbereich gibt es mindestens zwei Aufgaben.</p>
+ <div class="helpbox"><b>Hier sind Hilfen erlaubt.</b> Nutze zuerst möglichst deine eigene Idee. Wenn du festhängst, öffne zunächst <b>Tipp</b> und erst danach <b>Hilfe</b>.</div>
+ ${blocks}
+ <div class="actions"><button class="primary" onclick="beginRetest()">Ich habe meine Förderaufgaben bearbeitet. Jetzt will ich zeigen, was ich kann!</button><button class="secondary" onclick="window.print()">Meine Förderaufgaben als PDF</button></div>
+ <p class="muted">Im Bruchprofi-Check prüfen wir nur die Bereiche noch einmal, an denen du gearbeitet hast – mit neuen Aufgaben und ohne Hilfen.</p>`;
+ document.querySelectorAll("[data-support]").forEach(b=>b.addEventListener("click",()=>{
+   const box=document.getElementById(b.dataset.support); box.classList.toggle("show");
+   b.setAttribute("aria-expanded",box.classList.contains("show")?"true":"false");
+ }));
 }
-function practiceText(id){
- const t={
- 1:`Zeichne drei gleich lange Streifen. Teile sie in 2, 4 und 8 gleich große Teile. Markiere jeweils denselben Anteil: ${F(1,2)}, ${F(2,4)}, ${F(4,8)}. Beschreibe, was Zähler und Nenner angeben.`,
- 2:`Ordne ${F(1,3)}, ${F(1,5)} und ${F(1,8)} der Größe nach. Nutze zuerst Streifen und übertrage die Brüche anschließend auf einen Zahlenstrahl.`,
- 3:`Stelle ${F(2,3)} als Streifen dar. Verfeinere jeden Drittelteil in zwei gleich große Teile. Welcher gleichwertige Bruch entsteht? Erkläre, warum sich der Wert nicht ändert.`,
- 4:`Lege mit Viertel-Streifen zuerst ${F(4,4)}, dann ${F(5,4)} und ${F(7,4)}. Markiere, wo jeweils ein Ganzes überschritten wird.`,
- 5:`Bestimme ${F(2,3)} von 12 Plättchen: Teile zuerst in 3 gleich große Gruppen und nimm anschließend 2 Gruppen. Formuliere die beiden Schritte mit eigenen Worten.`,
- 6:`Verteile 5 gleich große Kuchen gerecht auf 6 Personen. Notiere die Division und den Bruch, der den Anteil pro Person beschreibt. Erkläre die Verbindung.`,
- 7:`Markiere ${F(1,2)} und ${F(3,4)} auf einem Zahlenstrahl. Vergrößere den Abschnitt und finde mindestens drei verschiedene Brüche dazwischen.`
- };return t[id]
+function fracCircle(parts,filled){
+ let stops=[]; const pct=filled/parts*100;
+ return `<div class="circlefrac" role="img" aria-label="${filled} von ${parts} Teilen markiert" style="background:conic-gradient(#8fb9df 0 ${pct}%,#fff ${pct}% 100%)"></div>`;
+}
+function dots(n,k){
+ return `<div class="dots" role="img" aria-label="${k} von ${n} Punkten markiert">${Array.from({length:n},(_,i)=>`<span class="dotitem ${i<k?'fill':''}"></span>`).join("")}</div>`;
+}
+function practiceCard(dim,n,title,task,visual,tip,help){
+ const id=`sup-${dim}-${n}`;
+ return `<div class="practice-card"><span class="badge">Förderaufgabe ${n}</span><h3>${title}</h3><p>${task}</p><div class="visual">${visual||""}</div>
+ <div class="actions no-print"><button type="button" class="tipbtn" data-support="${id}-t" aria-expanded="false">Tipp</button><button type="button" class="helpbtn" data-support="${id}-h" aria-expanded="false">Hilfe</button></div>
+ <div id="${id}-t" class="support"><b>Tipp:</b> ${tip}</div><div id="${id}-h" class="support"><b>Hilfe:</b> ${help}</div></div>`;
+}
+function practiceBlock(id){
+ const d=dims.find(x=>x.id===id);
+ let cards="";
+ if(id===1){
+   cards+=practiceCard(1,1,"Anteil erkennen",`Welcher Bruch beschreibt den markierten Anteil? Begründe mit Zähler und Nenner.`,strip(6,2),
+   "Zähle zuerst, in wie viele gleich große Teile das Ganze geteilt ist.",
+   `Der Nenner nennt die Zahl der gleich großen Teile: 6. Der Zähler nennt die markierten Teile: 2. Der passende Bruch ist ${F(2,6)}.`);
+   cards+=practiceCard(1,2,"Darstellung wechseln",`Zeichne auf Papier einen Kreis für ${F(3,4)}. Vergleiche danach mit der Darstellung hier.`,fracCircle(4,3),
+   "Teile den Kreis zuerst in vier gleich große Teile.",
+   "Markiere anschließend genau drei dieser vier gleich großen Teile. Achte darauf: Die Teile müssen gleich groß sein.");
+ } else if(id===2){
+   cards+=practiceCard(2,1,"Brüche vergleichen",`Ordne ${F(1,3)}, ${F(1,5)} und ${F(1,8)} von klein nach groß. Nutze die Streifen.`,`<p>${F(1,3)}</p>${strip(3,1)}<p>${F(1,5)}</p>${strip(5,1)}<p>${F(1,8)}</p>${strip(8,1)}`,
+   "Bei Stammbrüchen ist das Ganze gleich groß. Vergleiche die Größe eines einzelnen Teils.",
+   `Je größer der Nenner, desto kleiner ein einzelner Teil. Daher gilt ${F(1,8)} &lt; ${F(1,5)} &lt; ${F(1,3)}.`);
+   cards+=practiceCard(2,2,"Auf dem Zahlenstrahl",`Übertrage ${F(1,4)}, ${F(1,2)} und ${F(3,4)} auf einen Zahlenstrahl von 0 bis 1.`,numberLineVisual(),
+   "Teile die Strecke von 0 bis 1 in vier gleich große Abschnitte.",
+   `${F(1,4)} liegt beim ersten Viertelstrich, ${F(1,2)} in der Mitte und ${F(3,4)} beim dritten Viertelstrich.`);
+ } else if(id===3){
+   cards+=practiceCard(3,1,"Verfeinern",`Vergleiche ${F(1,2)} und ${F(2,4)}. Erkläre an den Streifen, warum beide denselben Wert haben.`,`${strip(2,1)}${strip(4,2)}`,
+   "Vergleiche nicht die Zahl der Kästchen, sondern die gesamte markierte Länge.",
+   "Beim zweiten Streifen wurde jeder Halbteil nochmals geteilt. Die markierte Länge bleibt gleich. Das ist Erweitern als Verfeinern.");
+   cards+=practiceCard(3,2,"Gruppieren",`Kürze ${F(6,8)} mithilfe der Darstellung. Welche gleich großen Gruppen kannst du bilden?`,strip(8,6),
+   "Fasse jeweils zwei Achtel zu einer größeren Gruppe zusammen.",
+   `Aus 8 Achteln werden 4 Viertel; aus 6 markierten Achteln werden 3 markierte Viertel. Also ${F(6,8)} = ${F(3,4)}.`);
+ } else if(id===4){
+   cards+=practiceCard(4,1,"Mehr als ein Ganzes",`Stelle ${F(5,4)} mit den Streifen dar. Wie viele Ganze und wie viele Viertel bleiben übrig?`,`${strip(4,4)}${strip(4,1)}`,
+   "Vier Viertel ergeben genau ein Ganzes.",
+   `${F(5,4)} besteht aus ${F(4,4)} und einem weiteren Viertel: also 1 Ganzes und ${F(1,4)}.`);
+   cards+=practiceCard(4,2,"Unechter Bruch als Zahl",`Ordne ${F(3,4)}, ${F(5,4)} und ${F(8,4)} danach, ob sie kleiner als 1, zwischen 1 und 2 oder gleich 2 sind.`,`<div class="mathbig">${F(3,4)} &nbsp; ${F(5,4)} &nbsp; ${F(8,4)}</div>`,
+   "Vergleiche jeweils den Zähler mit dem Nenner.",
+   `${F(3,4)}<1; ${F(5,4)} liegt zwischen 1 und 2; ${F(8,4)}=2.`);
+ } else if(id===5){
+   cards+=practiceCard(5,1,"Bruch als Operator",`Bestimme ${F(2,3)} von 15 Punkten. Nutze das Mengenbild.`,dots(15,0),
+   "Teile zuerst die 15 Punkte in 3 gleich große Gruppen.",
+   `Eine Drittelgruppe enthält 5 Punkte. Nimm davon 2 Gruppen: 2 · 5 = 10. Also sind ${F(2,3)} von 15 gleich 10.`);
+   cards+=practiceCard(5,2,"Die beiden Schritte",`Erkläre, wie du ${F(3,5)} von 20 bestimmst. Notiere erst den Nenner-Schritt und dann den Zähler-Schritt.`,dots(20,0),
+   "Der Nenner sagt, in wie viele gleich große Gruppen du aufteilst.",
+   "20 : 5 = 4. Eine Fünftelgruppe hat 4 Elemente. Danach 3 · 4 = 12.");
+ } else if(id===6){
+   cards+=practiceCard(6,1,"Gerecht verteilen",`3 Pizzen werden gerecht auf 5 Lernende verteilt. Welchen Anteil einer Pizza erhält jede Person?`,`<div class="mathbig">🍕 🍕 🍕 &nbsp; → &nbsp; 5 Personen</div>`,
+   "Schreibe die Verteilung zuerst als Division.",
+   `3 Ganze auf 5 Personen bedeutet 3 : 5. Als Bruch ist das ${F(3,5)} pro Person.`);
+   cards+=practiceCard(6,2,"Verhältnis oder Anteil?",`In einer Kiste liegen 4 blaue und 6 weiße Kugeln. Beschreibe sowohl das Verhältnis „blau : weiß“ als auch den Anteil der blauen Kugeln an allen Kugeln.`,`<div class="mathbig">🔵 🔵 🔵 🔵 ⚪ ⚪ ⚪ ⚪ ⚪ ⚪</div>`,
+   "Beim Verhältnis vergleichst du zwei Teilmengen. Beim Anteil brauchst du die Gesamtmenge.",
+   `Verhältnis blau : weiß = 4 : 6. Anteil blau an allen 10 Kugeln = ${F(4,10)}.`);
+ } else if(id===7){
+   cards+=practiceCard(7,1,"Dazwischen ist Platz",`Finde zwei Brüche zwischen ${F(1,2)} und ${F(3,4)}. Nutze gemeinsames Erweitern.`,`<div class="mathbig">${F(1,2)} &nbsp; … &nbsp; … &nbsp; ${F(3,4)}</div>`,
+   "Erweitere beide Brüche so, dass zwischen den Zählern mehrere ganze Zahlen liegen.",
+   `Zum Beispiel mit Sechzehnteln: ${F(1,2)}=${F(8,16)} und ${F(3,4)}=${F(12,16)}. Dazwischen liegen etwa ${F(9,16)}, ${F(10,16)} und ${F(11,16)}.`);
+   cards+=practiceCard(7,2,"Zahlenstrahl vergrößern",`Zwischen ${F(2,3)} und ${F(3,4)} soll ein weiterer Bruch gefunden werden. Begründe, warum es nicht nur einen geben kann.`,numberLineVisual(),
+   "Du kannst das Intervall immer weiter unterteilen.",
+   "Zwischen zwei verschiedenen Bruchzahlen liegen immer weitere Bruchzahlen. Durch gemeinsames Erweitern entstehen neue Zwischenwerte; das kann beliebig oft fortgesetzt werden.");
+ }
+ return `<section><h2>${d.name}</h2><p>${d.goal}</p>${cards}</section>`;
+}
+function numberLineVisual(){
+ return `<div class="numline" role="img" aria-label="Zahlenstrahl von 0 bis 1"><div class="axis"></div>
+ <span class="tick" style="left:2%"><label>0</label></span><span class="tick" style="left:26%"></span><span class="tick" style="left:50%"><label>${F(1,2)}</label></span><span class="tick" style="left:74%"></span><span class="tick" style="left:98%"><label>1</label></span></div>`;
 }
 function beginRetest(){
  state.mode="retest";state.cycle++;state.res2={};state.i=dims.findIndex(d=>d.id===state.redo[0]);state.stage="q";state.sel=null;
