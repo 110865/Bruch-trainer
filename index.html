@@ -1,238 +1,222 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Bruch-Diagnosetrainer – Version 2</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bruch-Diagnosetool – adaptiv</title>
 <style>
-:root{--navy:#17365d;--blue:#eaf3fb;--yellow:#fff5cf;--green:#dff3e4;--amber:#fff0b8;--red:#f8d7da;--ink:#1e293b;--muted:#64748b;--line:#cbd5e1}
-*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink);background:#f7f9fc}
-header{background:white;border-bottom:1px solid #e5e7eb;padding:14px 20px;position:sticky;top:0;z-index:5}
-.wrap{max-width:920px;margin:auto}.brand{display:flex;align-items:center;gap:14px}.brand b{color:var(--navy);font-size:1.12rem}
-.progress{height:7px;background:#e8edf4;border-radius:9px;margin-top:10px;overflow:hidden}.progress i{display:block;height:100%;background:var(--navy);width:0;transition:.25s}
-main{max-width:920px;margin:28px auto;padding:0 18px 60px}.card{background:white;border-radius:20px;padding:clamp(22px,4vw,42px);box-shadow:0 10px 28px rgba(23,54,93,.08)}
-h1,h2,h3{color:var(--navy);margin-top:0}h1{font-size:clamp(1.8rem,5vw,3rem)}h2{font-size:clamp(1.35rem,3vw,2rem)}
-.lead{font-size:1.12rem;line-height:1.6}.muted{color:var(--muted)}button,.choice{min-height:52px;border:0;border-radius:13px;padding:13px 18px;font-size:1rem;cursor:pointer;touch-action:manipulation}
-.primary{background:var(--navy);color:white;font-weight:700}.secondary{background:#edf2f7;color:var(--navy);font-weight:650}.choice{display:block;width:100%;text-align:left;background:#f8fafc;border:2px solid #dbe4ef;margin:10px 0}
-.choice:hover,.choice:focus{border-color:#7aa2ce}.choice.selected{border-color:var(--navy);background:var(--blue)}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.taskbox{background:var(--blue);padding:22px;border-radius:16px;margin:18px 0}.helpbox{background:var(--yellow);padding:18px;border-radius:14px;margin:18px 0}.practice-card{background:white;border:2px solid #dbe4ef;border-radius:16px;padding:20px;margin:16px 0}.practice-card .visual{margin:16px 0}.support{display:none;background:var(--yellow);border-radius:12px;padding:14px;margin-top:12px}.support.show{display:block}.tipbtn,.helpbtn{background:#edf2f7;color:var(--navy);font-weight:700}.circlefrac{width:150px;height:150px;border-radius:50%;border:3px solid var(--navy);margin:14px auto;position:relative;overflow:hidden;background:#fff}.dots{display:grid;grid-template-columns:repeat(5,44px);gap:10px;justify-content:center;margin:16px 0}.dotitem{width:42px;height:42px;border-radius:50%;border:2px solid var(--navy);background:#fff}.dotitem.fill{background:#8fb9df}.mini-note{font-size:.92rem;color:var(--muted);margin-top:8px}
-.frac{display:inline-grid;grid-template-rows:auto 2px auto;vertical-align:middle;text-align:center;line-height:1.05;margin:0 .12em;min-width:1.2em}.frac .bar{background:currentColor;width:100%}.frac .top,.frac .bot{padding:.06em .12em}
-.mathbig{font-size:2rem;text-align:center;margin:22px 0}.strip{display:flex;height:52px;border:2px solid var(--navy);border-radius:7px;overflow:hidden;margin:10px 0}.strip span{flex:1;border-right:1px solid var(--navy)}.strip span:last-child{border:0}.strip .fill{background:#8fb9df}
-.numline{position:relative;height:84px;margin:24px 12px}.numline .axis{position:absolute;left:2%;right:2%;top:36px;height:3px;background:var(--navy)}.tick{position:absolute;top:29px;width:2px;height:17px;background:var(--navy)}.tick label{position:absolute;top:20px;transform:translateX(-45%);white-space:nowrap}.dot{position:absolute;top:24px;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--navy);transform:translateX(-50%);cursor:pointer}
-.grid7{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.status{padding:16px;border-radius:14px}.A{background:var(--green)}.B{background:var(--amber)}.C{background:var(--red)}
-.badge{display:inline-block;padding:4px 9px;border-radius:999px;background:#edf2f7;font-size:.86rem}.phase{font-weight:700;color:var(--navy)}
-.small{font-size:.9rem}.hidden{display:none!important}
-@media(max-width:600px){main{margin-top:18px}.card{border-radius:16px;padding:20px}.mathbig{font-size:1.65rem}button,.choice{font-size:1rem;min-height:56px}}
-@media print{header,.no-print{display:none!important}body{background:white}main{margin:0;max-width:none}.card{box-shadow:none;padding:0}.status{break-inside:avoid}}
+:root{--navy:#17324d;--blue:#eaf4fb;--blue2:#d8ecf8;--yellow:#fff6cf;--green:#dff3e4;--red:#fde3e3;--mid:#fff0b8;--ink:#17212b;--muted:#607080;--line:#c9d7e2;--white:#fff}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#f5f8fa}
+header{background:var(--navy);color:white;padding:14px 18px} header .wrap{max-width:960px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-weight:750}.mode{font-size:.9rem;opacity:.9}
+main{max-width:960px;margin:24px auto;padding:0 16px 50px}
+.card{background:white;border:1px solid #e1e8ee;border-radius:18px;padding:24px;box-shadow:0 8px 26px rgba(20,45,70,.06)}
+h1{color:var(--navy);font-size:clamp(1.65rem,4vw,2.4rem);margin:.2em 0 .45em} h2{color:var(--navy)} h3{margin-bottom:.4em}
+.lead{font-size:1.08rem;line-height:1.55}.small{font-size:.9rem;color:var(--muted)} .source{background:#f7fafc;border-left:4px solid var(--navy);padding:12px 14px;margin:18px 0;font-size:.9rem;line-height:1.45}
+button{font:inherit;border:0;border-radius:12px;padding:12px 16px;cursor:pointer;min-height:48px}
+.primary{background:var(--navy);color:white;font-weight:700}.secondary{background:#edf2f5;color:var(--navy);font-weight:650}.choice{display:block;width:100%;text-align:left;background:white;border:2px solid var(--line);margin:10px 0;padding:14px}.choice.selected{border-color:var(--navy);background:var(--blue)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.hidden{display:none!important}
+.progress{height:8px;background:#e4ebf0;border-radius:20px;overflow:hidden;margin:14px 0 4px}.bar{height:100%;background:#7ba7c6;width:0;transition:.3s}.crumb{font-size:.86rem;color:var(--muted)}
+.taskbox{background:var(--blue);border-radius:16px;padding:18px;margin:16px 0}.deep{background:var(--yellow)} .math{font-size:1.2rem}
+.frac{display:inline-flex;vertical-align:middle;flex-direction:column;align-items:center;line-height:1.05;margin:0 .12em}.frac .top{border-bottom:1.8px solid currentColor;padding:0 .18em .08em}.frac .bottom{padding:.08em .18em 0}
+.strip{display:flex;width:min(100%,520px);height:64px;border:2px solid var(--navy);margin:16px 0}.cell{flex:1;border-right:1px solid var(--navy);background:white}.cell:last-child{border-right:0}.fill{background:#9cc9e5}
+.numberline{position:relative;width:min(100%,620px);height:80px;margin:18px 0}.axis{position:absolute;left:3%;right:3%;top:38px;border-top:3px solid var(--navy)}.tick{position:absolute;top:30px;width:2px;height:18px;background:var(--navy)}.lab{position:absolute;top:52px;transform:translateX(-50%);font-size:.85rem}
+.statusgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.status{padding:14px;border-radius:14px;border:1px solid #dfe7ec}.sA{background:var(--green)}.sB{background:var(--mid)}.sC{background:var(--red)}
+.role-tabs{display:flex;gap:8px;margin:12px 0}.role-tabs button.active{background:var(--navy);color:#fff}
+.teacher{font-size:.95rem}.path{padding:10px 12px;border-left:4px solid #8aa8bd;background:#f6f9fb;margin:8px 0}
+.practice{background:#fffdf3}.hint{background:var(--yellow);padding:12px;border-radius:12px;margin-top:10px}
+svg{max-width:100%;height:auto}.dots{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.dot{width:34px;height:34px;border-radius:50%;border:2px solid var(--navy);background:white}.dot.on{background:#9cc9e5}
+@media(max-width:600px){.card{padding:17px;border-radius:14px}.choice{padding:13px}.actions button{width:100%}}
+@media print{header,.no-print{display:none!important}body{background:#fff}main{max-width:none}.card{box-shadow:none;border:0}}
 </style>
-
-<script>
-window.addEventListener("DOMContentLoaded",()=>{
-  if(location.protocol==="file:"){
-    const n=document.createElement("div");
-    n.id="localnote";
-    n.style.cssText="max-width:920px;margin:12px auto 0;padding:10px 18px;color:#64748b;font:14px system-ui,-apple-system,Segoe UI,Arial,sans-serif";
-    n.textContent="Lokale Version: Diese Datei läuft vollständig im Browser. Für Lernende kann dieselbe Datei später unverändert über GitHub Pages, Moodle oder einen anderen Webserver bereitgestellt werden.";
-    document.body.insertBefore(n,document.querySelector("main"));
-  }
-});
-</script>
-
 </head>
 <body>
-<header><div class="wrap"><div class="brand"><b>Bruch-Check</b><span id="phase" class="phase">Start</span></div><div class="progress"><i id="prog"></i></div></div></header>
-<main><section id="app" class="card"></section></main>
+<header><div class="wrap"><div class="brand">Bruch-Diagnosetool</div><div id="mode" class="mode">Start</div></div></header>
+<main>
+<section id="start" class="card">
+<h1>Brüche verstehen – dein Diagnose-Check</h1>
+<p class="lead">Du bearbeitest kurze Aufgaben zu verschiedenen Vorstellungen von Brüchen. Wenn etwas schwierig ist, stellt der Trainer gezielt eine einfachere oder anders dargestellte Aufgabe. So entsteht dein persönliches Bruch-Profil.</p>
+<p><b>Für Lernende:</b> Während der Diagnose bekommst du noch keine Tipps und keine Richtig/Falsch-Anzeige. Danach erhältst du passende Förderaufgaben.</p>
+<div class="source"><b>Fachdidaktische Bezugsquellen:</b><br>
+Padberg / Wartha: <i>Didaktik der Bruchrechnung</i> – Grundvorstellungen, Darstellungen und typische Schwierigkeiten.<br>
+Wittmann: fachdidaktische Prinzipien des verstehensorientierten und operativen Mathematiklernens.<br>
+SMART: Fehlermusterdiagnose nach dem SMART-Ansatz; Bezug auf die Übersicht „SMART-Test-Aufgaben und mögliche Fehlvorstellungen“, Friedrich Verlag 2017.<br>
+<span class="small">Die Aufgaben dieses Trainers sind eigenständig formuliert; die genannten Quellen dienen als fachdidaktische Orientierung.</span></div>
+<div class="actions"><button class="primary" onclick="startDiag()">Diagnose starten</button><button class="secondary" onclick="showTeacherIntro()">Hinweis für Lehrende</button></div>
+<div id="teacherIntro" class="hidden source"><b>Für Lehrende:</b> Die Diagnose arbeitet adaptiv. Pro Dimension beginnt sie mit einer Basisaufgabe. Nur bei Auffälligkeiten wird entlang eines diagnostischen Pfades in vereinfachte bzw. alternative Darstellungen verzweigt. Die Diagnose beruht auf dem durchlaufenen Pfad und nicht auf einer bloßen Punktesumme.</div>
+</section>
+
+<section id="diag" class="card hidden">
+<div class="crumb" id="crumb"></div><div class="progress"><div id="bar" class="bar"></div></div>
+<div id="task"></div>
+<div class="actions"><button id="save" class="primary" onclick="submitAnswer()">Antwort speichern</button><button class="secondary" onclick="selectUncertain()">Ich bin mir nicht sicher</button></div>
+<p id="neutral" class="small"></p>
+</section>
+
+<section id="profile" class="card hidden">
+<h1>Dein Bruch-Profil</h1>
+<p>Die Farben zeigen, wo du bereits sicher bist und wo sich weiteres Üben lohnt.</p>
+<div id="profileGrid" class="statusgrid"></div>
+<div class="actions no-print"><button class="primary" onclick="startPractice()">Meine Förderaufgaben</button><button class="secondary" onclick="window.print()">Profil drucken / als PDF</button><button class="secondary" onclick="showTeacher()">Lehrendenansicht</button></div>
+</section>
+
+<section id="practice" class="card hidden practice">
+<h1>Jetzt wird geübt</h1><p>Du bekommst nur Aufgaben zu Bereichen, in denen die Diagnose noch Unsicherheiten gezeigt hat.</p>
+<div id="practiceTask"></div>
+<div class="actions no-print"><button class="secondary" onclick="showTip()">Tipp</button><button class="secondary" onclick="showHelp()">Hilfe</button><button class="primary" onclick="nextPractice()">Nächste Förderaufgabe</button></div>
+<div id="support"></div>
+</section>
+
+<section id="retest" class="card hidden">
+<h1>Bruchprofi-Check</h1><p>Wir prüfen nur die Bereiche noch einmal, an denen du gearbeitet hast.</p>
+<div id="reTask"></div>
+<div class="actions"><button class="primary" onclick="submitRetest()">Antwort speichern</button><button class="secondary" onclick="reUncertain()">Ich bin mir nicht sicher</button></div>
+</section>
+
+<section id="teacher" class="card hidden teacher">
+<h1>Lehrendenansicht</h1>
+<p>Beobachtung und diagnostische Interpretation werden getrennt ausgewiesen.</p>
+<div id="teacherReport"></div>
+<div class="actions no-print"><button class="secondary" onclick="window.print()">Bericht drucken / als PDF</button><button class="primary" onclick="showSection('profile')">Zurück zum Profil</button></div>
+</section>
+</main>
 <script>
-const F=(a,b)=>`<span class="frac" aria-label="${a} ${b}tel"><span class="top">${a}</span><span class="bar"></span><span class="bot">${b}</span></span>`;
+const F=(a,b)=>`<span class="frac"><span class="top">${a}</span><span class="bottom">${b}</span></span>`;
+const strip=(n,k)=>`<div class="strip">${Array.from({length:n},(_,i)=>`<div class="cell ${i<k?'fill':''}"></div>`).join('')}</div>`;
+const dots=(n,k)=>`<div class="dots">${Array.from({length:n},(_,i)=>`<span class="dot ${i<k?'on':''}"></span>`).join('')}</div>`;
+const line=(labels)=>`<div class="numberline"><div class="axis"></div>${labels.map(x=>`<div class="tick" style="left:${x.p}%"></div><div class="lab" style="left:${x.p}%">${x.t}</div>`).join('')}</div>`;
+
 const dims=[
-{id:1,name:"Teil–Ganzes / Anteil",goal:"Brüche als Anteil eines Ganzen verstehen.",
- q:{t:"Ein Rechteck ist in 5 gleich große Teile geteilt. Welcher Anteil ist markiert?",vis:()=>strip(5,2),opts:[["2/5",F(2,5)],["5/2",F(5,2)],["2/3",F(2,3)]],a:"2/5"},
- c:{t:"Ein Streifen ist in 4 gleich große Teile geteilt. Ein Teil ist markiert. Welcher Bruch passt?",vis:()=>strip(4,1),opts:[["1/4",F(1,4)],["4/1",F(4,1)]],a:"1/4"}},
-{id:2,name:"Bruch als Zahl / Größenvergleich",goal:"Brüche als Zahlen vergleichen und einordnen.",
- q:{t:"Welcher Bruch ist größer?",vis:()=>`<div class="mathbig">${F(1,5)} &nbsp; oder &nbsp; ${F(1,8)}</div>`,opts:[["1/5",F(1,5)],["1/8",F(1,8)]],a:"1/5"},
- c:{t:"Welcher markierte Anteil ist größer?",vis:()=>`<p>A</p>${strip(5,1)}<p>B</p>${strip(8,1)}`,opts:[["A","A"],["B","B"]],a:"A"}},
-{id:3,name:"Äquivalenz – Erweitern / Kürzen",goal:"Gleichwertige Brüche als dieselbe Zahl erkennen.",
- q:{t:`Welcher Bruch hat denselben Wert wie ${F(1,2)}?`,opts:[["2/4",F(2,4)],["2/3",F(2,3)],["1/4",F(1,4)]],a:"2/4"},
- c:{t:"Welche beiden Streifen zeigen denselben Anteil?",vis:()=>`${strip(2,1)}${strip(4,2)}`,opts:[["gleich","Die markierten Anteile sind gleich groß."],["nicht","Sie sind nicht gleich groß."]],a:"gleich"}},
-{id:4,name:"Unechte Brüche / mehrere Ganze",goal:"Brüche größer als 1 als Zahlen verstehen.",
- q:{t:`Welche Zahl beschreibt ${F(5,4)} richtig?`,opts:[["gt1","größer als 1"],["lt1","kleiner als 1"],["eq1","genau 1"]],a:"gt1"},
- c:{t:`Ein Ganzes besteht aus 4 Vierteln. Sind ${F(5,4)} mehr oder weniger als ein Ganzes?`,vis:()=>`${strip(4,4)}${strip(4,1)}`,opts:[["mehr","mehr als ein Ganzes"],["weniger","weniger als ein Ganzes"]],a:"mehr"}},
-{id:5,name:"Operatorvorstellung",goal:"Einen Bruch als Anteil von einer Größe anwenden.",
- q:{t:`12 Äpfel. Davon werden ${F(3,4)} genommen. Wie viele Äpfel sind das?`,opts:[["9","9"],["4","4"],["3","3"],["16","16"]],a:"9"},
- c:{t:`Was bedeutet ${F(3,4)} von 12?`,opts:[["op","12 in 4 gleich große Gruppen teilen und 3 Gruppen nehmen."],["swap","12 in 3 Gruppen teilen und 4 Gruppen nehmen."],["sub","Von 12 die Zahlen 3 und 4 abziehen."]],a:"op"}},
-{id:6,name:"Quotient und Verhältnis",goal:"Brüche als Quotient und Verhältnis unterscheiden.",
- q:{t:`3 Pizzen werden gerecht auf 4 Lernende verteilt. Wie viel Pizza erhält jede Person?`,opts:[["3/4",F(3,4)],["4/3",F(4,3)],["1/4",F(1,4)]],a:"3/4"},
- c:{t:"Welche Rechnung beschreibt die gerechte Verteilung von 3 Ganzen auf 4 Personen?",opts:[["3:4","3 : 4"],["4:3","4 : 3"],["3+4","3 + 4"]],a:"3:4"}},
-{id:7,name:"Dichte der Bruchzahlen",goal:"Verstehen, dass zwischen zwei Brüchen weitere Brüche liegen.",
- q:{t:`Gibt es zwischen ${F(1,2)} und ${F(3,4)} noch einen weiteren Bruch?`,opts:[["yes","Ja"],["no","Nein, diese Brüche sind Nachbarn."]],a:"yes"},
- c:{t:`Welcher Bruch liegt zwischen ${F(2,4)} und ${F(3,4)}?`,opts:[["5/8",F(5,8)],["1/4",F(1,4)],["4/4",F(4,4)]],a:"5/8"}}
+{id:1,name:"Teil–Ganzes / Anteil", base:{
+ q:`Der Streifen stellt <b>ein Ganzes</b> dar. Welcher Bruch ist blau? ${strip(5,2)}`,
+ opts:[F(2,5),F(5,2),F(2,3),"Das kann man nicht sagen"],correct:0},
+ deep1:{q:`Jetzt sind vier gleich große Teile zu sehen. ${strip(4,1)} Welcher Bruch ist blau?`,opts:[F(1,4),F(1,3),F(4,1)],correct:0,
+ obs:"Teil–Ganzes-Deutung bei einfacher Viererteilung"},
+ deep2:{q:`Was muss bei ${F(3,7)} der Nenner 7 beschreiben?`,opts:["Das Ganze ist in 7 gleich große Teile geteilt.","7 Teile sind markiert.","Das Ganze ist 7-mal so groß wie vorher."],correct:0,
+ obs:"Bedeutung des Nenners / Gleichteiligkeit"},
+ diag:"Hinweis auf Unsicherheit bei Teil–Ganzes-Zuordnung, Zähler/Nenner oder Gleichteiligkeit."},
+
+{id:2,name:"Bruch als Zahl / Größenvergleich",base:{
+ q:`Welche Zahl ist größer?`,opts:[F(1,5),F(1,8),"Beide sind gleich groß."],correct:0},
+ deep1:{q:`Vergleiche die gleich langen Streifen. Oben ist ${F(1,5)}, unten ${F(1,8)} markiert.<br>${strip(5,1)}${strip(8,1)}`,opts:[`${F(1,5)} ist größer.`,`${F(1,8)} ist größer.`,"gleich groß"],correct:0,obs:"Größenvergleich im Flächen-/Streifenmodell"},
+ deep2:{q:`Auf dem Zahlenstrahl liegt eine Zahl weiter rechts. Was bedeutet das? ${line([{p:5,t:"0"},{p:50,t:"?"},{p:95,t:"1"}])}`,opts:["Sie ist größer.","Sie hat den größeren Nenner.","Sie ist näher bei 0."],correct:0,obs:"Ordnungsverständnis am Zahlenstrahl"},
+ diag:"Hinweis auf Schwierigkeiten, Brüche als Zahlen zu ordnen; mögliches Ganzzahl-Denken bei Zähler/Nenner."},
+
+{id:3,name:"Äquivalenz – Erweitern / Kürzen",base:{
+ q:`Welcher Bruch ist gleich groß wie ${F(2,3)}?`,opts:[F(4,6),F(3,4),F(4,5)],correct:0},
+ deep1:{q:`Beide Streifen sind gleich lang. Welche Aussage passt? ${strip(3,2)}${strip(6,4)}`,opts:[`${F(2,3)} = ${F(4,6)}`,`${F(2,3)} < ${F(4,6)}`,`${F(2,3)} > ${F(4,6)}`],correct:0,obs:"Äquivalenz im Streifenmodell"},
+ deep2:{q:`Beim Erweitern von ${F(2,3)} auf Sechstel wird jedes Drittel in zwei gleich große Teile zerlegt. Wie viele Sechstel sind dann markiert?`,opts:["4","5","6"],correct:0,obs:"Erweitern als Verfeinern einer Einteilung"},
+ diag:"Hinweis auf fehlende stabile Vorstellung von Bruchgleichheit bzw. Erweitern/Kürzen als Verfeinern/Gruppieren."},
+
+{id:4,name:"Unechte Brüche / mehrere Ganze",base:{
+ q:`Welche Zahl beschreibt ${F(7,4)} richtig?`,opts:[`1 ${F(3,4)}`,`${F(3,4)}`,`2 ${F(1,4)}`],correct:0},
+ deep1:{q:`Ein Ganzes besteht aus 4 Vierteln. Wie viele Ganze und Viertel sind 7 Viertel?`,opts:[`1 Ganzes und ${F(3,4)}`,`7 Ganze und ${F(1,4)}`,`${F(3,4)} eines Ganzen`],correct:0,obs:"Bündelung mehrerer Viertel zu ganzen Einheiten"},
+ deep2:{q:`Wo liegt ${F(5,4)}? ${line([{p:5,t:"0"},{p:50,t:"1"},{p:95,t:"2"}])}`,opts:["zwischen 0 und 1","zwischen 1 und 2","genau bei 2"],correct:1,obs:"Unechter Bruch als Zahl größer als 1"},
+ diag:"Hinweis auf eine auf Anteile unterhalb eines Ganzen beschränkte Bruchvorstellung."},
+
+{id:5,name:"Operatorvorstellung",base:{
+ q:`Von 12 Äpfeln werden ${F(3,4)} genommen. Wie viele Äpfel sind das? ${dots(12,0)}`,opts:["9","4","3"],correct:0},
+ deep1:{q:`Um ${F(3,4)} von 12 zu bestimmen: Was ist ein sinnvoller erster Schritt?`,opts:["12 in 4 gleich große Gruppen teilen.","12 in 3 gleich große Gruppen teilen.","12 + 4 rechnen."],correct:0,obs:"Nenner als Anzahl gleich großer Gruppen beim Operator"},
+ deep2:{q:`Ein Viertel von 12 sind 3. Wie viele sind dann drei Viertel?`,opts:["9","6","4"],correct:0,obs:"Zähler als Anzahl der ausgewählten Viertel"},
+ diag:"Hinweis auf Unsicherheit beim Bruch als Operator: Teilen durch den Nenner und Vervielfachen mit dem Zähler."},
+
+{id:6,name:"Quotient und Verhältnis",base:{
+ q:`3 Pizzen werden gerecht auf 4 Lernende verteilt. Wie viel Pizza erhält jede Person?`,opts:[F(3,4),F(4,3),F(1,4)],correct:0},
+ deep1:{q:`Eine Pizza wird auf 4 Lernende gleich verteilt. Wie viel erhält jede Person?`,opts:[F(1,4),F(4,1),F(1,3)],correct:0,obs:"Quotient als gerechtes Verteilen"},
+ deep2:{q:`Jetzt werden 3 gleich große Pizzen jeweils geviertelt. Jede Person bekommt von jeder Pizza ein Viertel. Wie viel ist das insgesamt?`,opts:[F(3,4),F(3,12),F(4,3)],correct:0,obs:"Verknüpfung Verteilen ↔ Bruchzahl"},
+ diag:"Hinweis auf Schwierigkeiten beim Bruch als Quotient bzw. beim Übersetzen einer Verteilungssituation."},
+
+{id:7,name:"Dichte der Bruchzahlen",base:{
+ q:`Welche Zahl liegt zwischen ${F(1,2)} und ${F(3,4)}?`,opts:[F(5,8),F(1,4),F(4,4)],correct:0},
+ deep1:{q:`Erweitere ${F(1,2)} und ${F(3,4)} auf Achtel. Welche Darstellung stimmt?`,opts:[`${F(4,8)} und ${F(6,8)}`,`${F(1,8)} und ${F(3,8)}`,`${F(2,8)} und ${F(3,8)}`],correct:0,obs:"Verfeinern zur Erzeugung eines Zwischenbruchs"},
+ deep2:{q:`Gibt es zwischen zwei verschiedenen Bruchzahlen immer noch eine weitere Bruchzahl?`,opts:["Ja.","Nein, manchmal liegen sie direkt nebeneinander.","Nur wenn die Nenner gleich sind."],correct:0,obs:"Dichte der Bruchzahlen"},
+ diag:"Hinweis auf eine diskrete Zahlvorstellung: Brüche werden möglicherweise wie unmittelbar aufeinanderfolgende ganze Zahlen gedacht."}
 ];
-function strip(n,k){return `<div class="strip" aria-label="${k} von ${n} Teilen markiert">${Array.from({length:n},(_,i)=>`<span class="${i<k?'fill':''}"></span>`).join("")}</div>`}
-let state={i:0,stage:"q",sel:null,res:{},evidence:{},mode:"diagnose",redo:[],cycle:0};
-const app=document.querySelector("#app"),phase=document.querySelector("#phase"),prog=document.querySelector("#prog");
-function start(){state={i:0,stage:"q",sel:null,res:{},evidence:{},mode:"diagnose",redo:[],cycle:0};renderTask()}
-function home(){phase.textContent="Start";prog.style.width="0";app.innerHTML=`<h1>Bruch-Check</h1><p class="lead">Der Bruch-Check untersucht sieben zentrale Grundvorstellungen zu Brüchen. Die Diagnose läuft neutral und ohne richtig/falsch-Rückmeldung. Anschließend erhältst du ein persönliches Profil, mindestens zwei passende Förderaufgaben je Förderbereich mit Tipp- und Hilfe-Schaltflächen sowie – falls nötig – einen kurzen Bruchprofi-Check.</p><div class="helpbox"><b>Wichtig:</b> Es geht nicht um eine Note. Wenn du unsicher bist, kannst du das sagen. Während des Checks bekommst du bewusst keine Lösungshinweise.</div><div class="actions"><button class="primary" onclick="start()">Bruch-Check starten</button></div><p class="muted small">Version 2 · adaptive Diagnose · individuelle Förderung · Tipp & Hilfe · mehr Grafiken · iPad/Tablet/Desktop</p>`}
+
+let state={di:0,level:0,selected:null,results:[],paths:[],practice:[],pi:0,retest:[],ri:0};
+
+function showSection(id){["start","diag","profile","practice","retest","teacher"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id))}
+function showTeacherIntro(){document.getElementById("teacherIntro").classList.toggle("hidden")}
+function startDiag(){state={di:0,level:0,selected:null,results:[],paths:[],practice:[],pi:0,retest:[],ri:0};showSection("diag");document.getElementById("mode").textContent="Neutrale Diagnose";renderTask()}
+function current(){let d=dims[state.di]; return state.level===0?d.base:state.level===1?d.deep1:d.deep2}
 function renderTask(){
- let d=dims[state.i],x=d[state.stage]; phase.textContent=state.mode==="retest"?"Bruchprofi-Check":"Diagnose";
- prog.style.width=`${Math.round((state.i+0.2)/dims.length*100)}%`;
- app.innerHTML=`<span class="badge">${state.mode==="retest"?"Bruchprofi-Check":"Bruch-Check"} · Bereich ${d.id}</span><h2>${d.name}</h2><div class="taskbox"><h3>${x.t}</h3>${x.vis?x.vis():""}<div id="opts">${x.opts.map(o=>`<button class="choice" data-v="${o[0]}">${o[1]}</button>`).join("")}<button class="choice" data-v="?">Ich bin mir nicht sicher.</button></div></div><p class="muted small">Wähle die Antwort, die du für richtig hältst. Es gibt während der Diagnose keine inhaltlichen Hinweise.</p><div class="actions"><button id="next" class="primary" disabled>Antwort speichern</button></div>`;
- document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{document.querySelectorAll(".choice").forEach(z=>z.classList.remove("selected"));b.classList.add("selected");state.sel=b.dataset.v;document.querySelector("#next").disabled=false});
- document.querySelector("#next").onclick=submit;
+ let d=dims[state.di],t=current(); state.selected=null;
+ document.getElementById("crumb").textContent=`Bereich ${state.di+1} von 7 · ${d.name}${state.level?` · diagnostische Vertiefung ${state.level}`:""}`;
+ document.getElementById("bar").style.width=`${(state.di/7)*100}%`;
+ document.getElementById("task").innerHTML=`<div class="taskbox ${state.level?'deep':''}"><h2>${d.name}</h2><div class="math">${t.q}</div></div><div id="opts">${t.opts.map((o,i)=>`<button class="choice" onclick="choose(${i},this)">${o}</button>`).join("")}</div>`;
+ document.getElementById("neutral").textContent="";
 }
-function submit(){
- let d=dims[state.i],x=d[state.stage],ok=state.sel===x.a;
- if(!state.evidence[d.id])state.evidence[d.id]=[];
- state.evidence[d.id].push({stage:state.stage,answer:state.sel,correct:ok,mode:state.mode});
- if(state.stage==="q"){
-   if(ok){state.res[d.id]="A";advance()}
-   else{state.stage="c";state.sel=null;renderTask()}
- }else{
-   if(ok)state.res[d.id]="B"; else state.res[d.id]="C";
-   advance();
- }
+function choose(i,el){state.selected=i;document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));el.classList.add("selected")}
+function selectUncertain(){state.selected="u";document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));document.getElementById("neutral").textContent="„Ich bin mir nicht sicher“ wurde ausgewählt."}
+function submitAnswer(){
+ if(state.selected===null){document.getElementById("neutral").textContent="Bitte wähle eine Antwort oder „Ich bin mir nicht sicher“.";return}
+ let d=dims[state.di],t=current(),ok=state.selected===t.correct;
+ state.paths.push({dim:d.name,level:state.level,answer:state.selected,correct:ok,observation:state.level?t.obs:"Basisaufgabe"});
+ document.getElementById("neutral").textContent="Antwort gespeichert.";
+ if(ok){
+   let cls=state.level===0?"A":"B";
+   state.results.push({dim:d.name,cls,depth:state.level,diag: state.level===0?"Basisaufgabe sicher gelöst.":d.diag});
+   nextDim();
+ } else if(state.level<2){state.level++;setTimeout(renderTask,220)}
+ else {state.results.push({dim:d.name,cls:"C",depth:2,diag:d.diag});nextDim()}
 }
-function advance(){
- state.stage="q";state.sel=null;
- if(state.mode==="retest"){
-   let pos=state.redo.indexOf(dims[state.i].id);
-   if(pos<state.redo.length-1){state.i=dims.findIndex(d=>d.id===state.redo[pos+1]);renderTask()}else finishRetest();
- }else if(state.i<dims.length-1){state.i++;renderTask()}else results();
+function nextDim(){state.di++;state.level=0;if(state.di>=dims.length){renderProfile()}else setTimeout(renderTask,220)}
+function renderProfile(){
+ showSection("profile");document.getElementById("mode").textContent="Lernendenprofil";document.getElementById("bar").style.width="100%";
+ let g=document.getElementById("profileGrid");g.innerHTML=state.results.map(r=>`<div class="status ${r.cls==="A"?"sA":r.cls==="B"?"sB":"sC"}"><b>${r.dim}</b><br>${r.cls==="A"?"sicher":r.cls==="B"?"noch festigen":"weiter aufbauen"}<div class="small">${r.cls==="A"?"Basisvorstellung in der Einstiegsaufgabe sicher.":"Hier bekommst du passende Förderaufgaben."}</div></div>`).join("");
 }
-const label=r=>r==="A"?"sicher":r==="B"?"noch festigen":"weiter aufbauen";
-function results(){
- phase.textContent="Dein Profil";prog.style.width="100%";
- let needs=dims.filter(d=>state.res[d.id]!=="A");
- app.innerHTML=`<h1>Dein Bruch-Profil</h1><p class="lead">Hier siehst du, welche Vorstellungen schon sicher sind und wo sich weiteres Üben lohnt.</p><div class="grid7">${dims.map(d=>`<div class="status ${state.res[d.id]}"><b>${d.id}. ${d.name}</b><br>${label(state.res[d.id])}</div>`).join("")}</div>
- <h2 style="margin-top:30px">Deine nächsten Schritte</h2>${needs.length?needs.map(d=>`<div class="helpbox"><b>${d.name}</b><br>${d.goal}<br><span class="small">Dazu erhältst du jetzt gezielte Förderaufgaben.</span></div>`).join(""):`<div class="status A"><b>Alle Bereiche sind sicher.</b><br>Du hast in dieser Version in allen sieben Bereichen sichere Evidenz gezeigt.</div>`}
- <div class="actions no-print">${needs.length?`<button class="primary" onclick="practice()">Passende Förderaufgaben starten</button>`:""}<button class="secondary" onclick="window.print()">Profil als PDF drucken/speichern</button><button class="secondary" onclick="teacher()">Lehrendenansicht</button><button class="secondary" onclick="downloadDiagnosis()">Diagnosedaten speichern</button></div>`;
+const practiceBank={
+"Teil–Ganzes / Anteil":[
+ {q:`Markiere gedanklich ${F(3,5)} eines Streifens. Welche Beschreibung passt?`,a:"Das Ganze wird in 5 gleich große Teile geteilt; 3 davon werden ausgewählt.",tip:"Achte zuerst auf den Nenner.",help:"Der Nenner sagt, in wie viele gleich große Teile das Ganze geteilt wird."},
+ {q:`Ein Kreis ist in 8 gleich große Sektoren geteilt. 6 sind markiert. Welcher Bruch beschreibt den Anteil?`,a:F(6,8),tip:"Zähle alle gleich großen Teile und dann die markierten.",help:"Nenner = alle gleich großen Teile; Zähler = markierte Teile."}],
+"Bruch als Zahl / Größenvergleich":[
+ {q:`Ordne ${F(1,3)}, ${F(1,6)}, ${F(1,2)} von klein nach groß.`,a:`${F(1,6)} < ${F(1,3)} < ${F(1,2)}`,tip:"Stell dir gleich lange Streifen vor.",help:"Bei Stammbrüchen gilt: Je größer der Nenner, desto kleiner ein Teil."},
+ {q:`Welche Zahl liegt näher bei 1: ${F(7,8)} oder ${F(5,8)}?`,a:F(7,8),tip:"Wie viele Achtel fehlen jeweils bis 1?",help:`1 = ${F(8,8)}.`}],
+"Äquivalenz – Erweitern / Kürzen":[
+ {q:`Ergänze: ${F(3,4)} = ${F("?",12)}`,a:"9",tip:"Wie wurde 4 zu 12?",help:"Der Nenner wurde mit 3 multipliziert. Dasselbe geschieht mit dem Zähler."},
+ {q:`Kürze ${F(8,12)} so weit wie möglich.`,a:F(2,3),tip:"Finde eine Zahl, durch die 8 und 12 teilbar sind.",help:"Teile Zähler und Nenner zunächst durch 4."}],
+"Unechte Brüche / mehrere Ganze":[
+ {q:`Schreibe ${F(9,4)} als gemischte Zahl.`,a:`2 ${F(1,4)}`,tip:"Wie viele vollständige Vierergruppen stecken in 9 Vierteln?",help:"8 Viertel sind 2 Ganze; 1 Viertel bleibt übrig."},
+ {q:`Welche Zahl ist größer als 1: ${F(4,5)}, ${F(6,5)} oder ${F(5,6)}?`,a:F(6,5),tip:"Vergleiche Zähler und Nenner.",help:"Ein positiver Bruch ist größer als 1, wenn der Zähler größer als der Nenner ist."}],
+"Operatorvorstellung":[
+ {q:`Bestimme ${F(2,5)} von 20.`,a:"8",tip:"Bestimme zuerst ein Fünftel von 20.",help:"20 : 5 = 4; davon brauchst du 2 Teile."},
+ {q:`${F(3,8)} einer Strecke von 24 cm werden markiert. Wie lang ist der markierte Teil?`,a:"9 cm",tip:"Bestimme zuerst ein Achtel.",help:"24 : 8 = 3; anschließend 3 · 3."}],
+"Quotient und Verhältnis":[
+ {q:`5 Brote werden gerecht auf 8 Gruppen verteilt. Welcher Bruch eines Brotes entfällt rechnerisch auf jede Gruppe?`,a:F(5,8),tip:"Schreibe „5 geteilt durch 8“ als Bruch.",help:`5 : 8 = ${F(5,8)}.`},
+ {q:`2 Liter Saft werden gleichmäßig auf 5 Flaschen verteilt. Wie viel Liter kommen in jede Flasche?`,a:`${F(2,5)} Liter`,tip:"Gesamtmenge geteilt durch Anzahl der Flaschen.",help:`2 : 5 = ${F(2,5)}.`}],
+"Dichte der Bruchzahlen":[
+ {q:`Finde einen Bruch zwischen ${F(2,5)} und ${F(3,5)}.`,a:`z. B. ${F(1,2)}`,tip:"Erweitere beide Brüche auf Zehntel.",help:`${F(2,5)}=${F(4,10)} und ${F(3,5)}=${F(6,10)}. Dazwischen liegt ${F(5,10)}.`},
+ {q:`Finde einen Bruch zwischen ${F(3,8)} und ${F(4,8)}.`,a:`z. B. ${F(7,16)}`,tip:"Mit Achteln scheint kein Platz zu sein – verfeinere die Einteilung.",help:`${F(3,8)}=${F(6,16)} und ${F(4,8)}=${F(8,16)}.`}]
+};
+function startPractice(){
+ state.practice=[];state.results.filter(r=>r.cls!=="A").forEach(r=>(practiceBank[r.dim]||[]).forEach(x=>state.practice.push({...x,dim:r.dim})));
+ if(!state.practice.length){alert("Aktuell sind keine Förderaufgaben nötig.");return}
+ state.pi=0;showSection("practice");document.getElementById("mode").textContent="Förderphase";renderPractice()
 }
-function practice(){
- state.redo=dims.filter(d=>state.res[d.id]!=="A").map(d=>d.id);phase.textContent="Förderung";
- let blocks=state.redo.map(id=>practiceBlock(id)).join("");
- app.innerHTML=`<h1>Jetzt wird geübt</h1>
- <p class="lead">Du bekommst nur Aufgaben zu Bereichen, in denen dein Bruch-Check Förderbedarf gezeigt hat. Zu jedem Förderbereich gibt es mindestens zwei Aufgaben.</p>
- <div class="helpbox"><b>Hier sind Hilfen erlaubt.</b> Nutze zuerst möglichst deine eigene Idee. Wenn du festhängst, öffne zunächst <b>Tipp</b> und erst danach <b>Hilfe</b>.</div>
- ${blocks}
- <div class="actions"><button class="primary" onclick="beginRetest()">Ich habe meine Förderaufgaben bearbeitet. Jetzt will ich zeigen, was ich kann!</button><button class="secondary" onclick="window.print()">Meine Förderaufgaben als PDF</button></div>
- <p class="muted">Im Bruchprofi-Check prüfen wir nur die Bereiche noch einmal, an denen du gearbeitet hast – mit neuen Aufgaben und ohne Hilfen.</p>`;
- document.querySelectorAll("[data-support]").forEach(b=>b.addEventListener("click",()=>{
-   const box=document.getElementById(b.dataset.support); box.classList.toggle("show");
-   b.setAttribute("aria-expanded",box.classList.contains("show")?"true":"false");
- }));
+function renderPractice(){let x=state.practice[state.pi];document.getElementById("practiceTask").innerHTML=`<h2>${x.dim}</h2><div class="taskbox"><div class="math">${x.q}</div></div><details><summary>Antwort selbst prüfen</summary><div class="hint"><b>Lösung:</b> ${x.a}</div></details>`;document.getElementById("support").innerHTML=""}
+function showTip(){let x=state.practice[state.pi];document.getElementById("support").innerHTML=`<div class="hint"><b>Tipp:</b> ${x.tip}</div>`}
+function showHelp(){let x=state.practice[state.pi];document.getElementById("support").innerHTML=`<div class="hint"><b>Hilfe:</b> ${x.help}</div>`}
+function nextPractice(){state.pi++;if(state.pi>=state.practice.length){prepareRetest()}else renderPractice()}
+function prepareRetest(){
+ state.retest=state.results.filter(r=>r.cls!=="A").map(r=>{
+  let d=dims.find(x=>x.name===r.dim);
+  return {dim:r.dim,q:`Parallelaufgabe: ${d.deep1.q}`,opts:d.deep1.opts,correct:d.deep1.correct}
+ }); state.ri=0;state.reSel=null;showSection("retest");document.getElementById("mode").textContent="Neutrale Re-Diagnose";renderRetest()
 }
-function fracCircle(parts,filled){
- let stops=[]; const pct=filled/parts*100;
- return `<div class="circlefrac" role="img" aria-label="${filled} von ${parts} Teilen markiert" style="background:conic-gradient(#8fb9df 0 ${pct}%,#fff ${pct}% 100%)"></div>`;
+function renderRetest(){let x=state.retest[state.ri];document.getElementById("reTask").innerHTML=`<h2>${x.dim}</h2><div class="taskbox"><div class="math">${x.q}</div></div>${x.opts.map((o,i)=>`<button class="choice" onclick="chooseRe(${i},this)">${o}</button>`).join("")}`}
+function chooseRe(i,el){state.reSel=i;document.querySelectorAll("#reTask .choice").forEach(x=>x.classList.remove("selected"));el.classList.add("selected")}
+function reUncertain(){state.reSel="u"}
+function submitRetest(){if(state.reSel===undefined||state.reSel===null){alert("Bitte Antwort auswählen.");return}let x=state.retest[state.ri],ok=state.reSel===x.correct;let r=state.results.find(y=>y.dim===x.dim);if(ok)r.cls="A";state.ri++;state.reSel=null;if(state.ri>=state.retest.length)renderProfile();else renderRetest()}
+function showTeacher(){
+ showSection("teacher");document.getElementById("mode").textContent="Lehrendenansicht";
+ let h=state.results.map(r=>{
+  let ps=state.paths.filter(p=>p.dim===r.dim);
+  return `<h3>${r.dim} – intern ${r.cls}</h3>
+  <div class="path"><b>Beobachtung:</b> ${ps.map(p=>`${p.level===0?"Basis":"Vertiefung "+p.level}: ${p.correct?"sicher gelöst":"auffällig/unsicher"}`).join(" → ")}</div>
+  <div class="path"><b>Diagnostischer Hinweis:</b> ${r.diag}</div>
+  <div class="path"><b>Förderempfehlung:</b> ${r.cls==="A"?"Keine zusätzliche Förderung aus diesem Pfad abgeleitet.":"Gezielte Förderung dieses Teilbereichs mit Darstellungswechsel und mindestens zwei Aufgaben."}</div>`;
+ }).join("");
+ document.getElementById("teacherReport").innerHTML=h+`<div class="source"><b>Hinweis zur Interpretation:</b> Die Einordnung ist eine lernprozessbezogene Diagnose aus den Antworten dieses Trainers und keine umfassende Leistungsbewertung.</div>`;
 }
-function dots(n,k){
- return `<div class="dots" role="img" aria-label="${k} von ${n} Punkten markiert">${Array.from({length:n},(_,i)=>`<span class="dotitem ${i<k?'fill':''}"></span>`).join("")}</div>`;
-}
-function practiceCard(dim,n,title,task,visual,tip,help){
- const id=`sup-${dim}-${n}`;
- return `<div class="practice-card"><span class="badge">Förderaufgabe ${n}</span><h3>${title}</h3><p>${task}</p><div class="visual">${visual||""}</div>
- <div class="actions no-print"><button type="button" class="tipbtn" data-support="${id}-t" aria-expanded="false">Tipp</button><button type="button" class="helpbtn" data-support="${id}-h" aria-expanded="false">Hilfe</button></div>
- <div id="${id}-t" class="support"><b>Tipp:</b> ${tip}</div><div id="${id}-h" class="support"><b>Hilfe:</b> ${help}</div></div>`;
-}
-function practiceBlock(id){
- const d=dims.find(x=>x.id===id);
- let cards="";
- if(id===1){
-   cards+=practiceCard(1,1,"Anteil erkennen",`Welcher Bruch beschreibt den markierten Anteil? Begründe mit Zähler und Nenner.`,strip(6,2),
-   "Zähle zuerst, in wie viele gleich große Teile das Ganze geteilt ist.",
-   `Der Nenner nennt die Zahl der gleich großen Teile: 6. Der Zähler nennt die markierten Teile: 2. Der passende Bruch ist ${F(2,6)}.`);
-   cards+=practiceCard(1,2,"Darstellung wechseln",`Zeichne auf Papier einen Kreis für ${F(3,4)}. Vergleiche danach mit der Darstellung hier.`,fracCircle(4,3),
-   "Teile den Kreis zuerst in vier gleich große Teile.",
-   "Markiere anschließend genau drei dieser vier gleich großen Teile. Achte darauf: Die Teile müssen gleich groß sein.");
- } else if(id===2){
-   cards+=practiceCard(2,1,"Brüche vergleichen",`Ordne ${F(1,3)}, ${F(1,5)} und ${F(1,8)} von klein nach groß. Nutze die Streifen.`,`<p>${F(1,3)}</p>${strip(3,1)}<p>${F(1,5)}</p>${strip(5,1)}<p>${F(1,8)}</p>${strip(8,1)}`,
-   "Bei Stammbrüchen ist das Ganze gleich groß. Vergleiche die Größe eines einzelnen Teils.",
-   `Je größer der Nenner, desto kleiner ein einzelner Teil. Daher gilt ${F(1,8)} &lt; ${F(1,5)} &lt; ${F(1,3)}.`);
-   cards+=practiceCard(2,2,"Auf dem Zahlenstrahl",`Übertrage ${F(1,4)}, ${F(1,2)} und ${F(3,4)} auf einen Zahlenstrahl von 0 bis 1.`,numberLineVisual(),
-   "Teile die Strecke von 0 bis 1 in vier gleich große Abschnitte.",
-   `${F(1,4)} liegt beim ersten Viertelstrich, ${F(1,2)} in der Mitte und ${F(3,4)} beim dritten Viertelstrich.`);
- } else if(id===3){
-   cards+=practiceCard(3,1,"Verfeinern",`Vergleiche ${F(1,2)} und ${F(2,4)}. Erkläre an den Streifen, warum beide denselben Wert haben.`,`${strip(2,1)}${strip(4,2)}`,
-   "Vergleiche nicht die Zahl der Kästchen, sondern die gesamte markierte Länge.",
-   "Beim zweiten Streifen wurde jeder Halbteil nochmals geteilt. Die markierte Länge bleibt gleich. Das ist Erweitern als Verfeinern.");
-   cards+=practiceCard(3,2,"Gruppieren",`Kürze ${F(6,8)} mithilfe der Darstellung. Welche gleich großen Gruppen kannst du bilden?`,strip(8,6),
-   "Fasse jeweils zwei Achtel zu einer größeren Gruppe zusammen.",
-   `Aus 8 Achteln werden 4 Viertel; aus 6 markierten Achteln werden 3 markierte Viertel. Also ${F(6,8)} = ${F(3,4)}.`);
- } else if(id===4){
-   cards+=practiceCard(4,1,"Mehr als ein Ganzes",`Stelle ${F(5,4)} mit den Streifen dar. Wie viele Ganze und wie viele Viertel bleiben übrig?`,`${strip(4,4)}${strip(4,1)}`,
-   "Vier Viertel ergeben genau ein Ganzes.",
-   `${F(5,4)} besteht aus ${F(4,4)} und einem weiteren Viertel: also 1 Ganzes und ${F(1,4)}.`);
-   cards+=practiceCard(4,2,"Unechter Bruch als Zahl",`Ordne ${F(3,4)}, ${F(5,4)} und ${F(8,4)} danach, ob sie kleiner als 1, zwischen 1 und 2 oder gleich 2 sind.`,`<div class="mathbig">${F(3,4)} &nbsp; ${F(5,4)} &nbsp; ${F(8,4)}</div>`,
-   "Vergleiche jeweils den Zähler mit dem Nenner.",
-   `${F(3,4)}<1; ${F(5,4)} liegt zwischen 1 und 2; ${F(8,4)}=2.`);
- } else if(id===5){
-   cards+=practiceCard(5,1,"Bruch als Operator",`Bestimme ${F(2,3)} von 15 Punkten. Nutze das Mengenbild.`,dots(15,0),
-   "Teile zuerst die 15 Punkte in 3 gleich große Gruppen.",
-   `Eine Drittelgruppe enthält 5 Punkte. Nimm davon 2 Gruppen: 2 · 5 = 10. Also sind ${F(2,3)} von 15 gleich 10.`);
-   cards+=practiceCard(5,2,"Die beiden Schritte",`Erkläre, wie du ${F(3,5)} von 20 bestimmst. Notiere erst den Nenner-Schritt und dann den Zähler-Schritt.`,dots(20,0),
-   "Der Nenner sagt, in wie viele gleich große Gruppen du aufteilst.",
-   "20 : 5 = 4. Eine Fünftelgruppe hat 4 Elemente. Danach 3 · 4 = 12.");
- } else if(id===6){
-   cards+=practiceCard(6,1,"Gerecht verteilen",`3 Pizzen werden gerecht auf 5 Lernende verteilt. Welchen Anteil einer Pizza erhält jede Person?`,`<div class="mathbig">🍕 🍕 🍕 &nbsp; → &nbsp; 5 Personen</div>`,
-   "Schreibe die Verteilung zuerst als Division.",
-   `3 Ganze auf 5 Personen bedeutet 3 : 5. Als Bruch ist das ${F(3,5)} pro Person.`);
-   cards+=practiceCard(6,2,"Verhältnis oder Anteil?",`In einer Kiste liegen 4 blaue und 6 weiße Kugeln. Beschreibe sowohl das Verhältnis „blau : weiß“ als auch den Anteil der blauen Kugeln an allen Kugeln.`,`<div class="mathbig">🔵 🔵 🔵 🔵 ⚪ ⚪ ⚪ ⚪ ⚪ ⚪</div>`,
-   "Beim Verhältnis vergleichst du zwei Teilmengen. Beim Anteil brauchst du die Gesamtmenge.",
-   `Verhältnis blau : weiß = 4 : 6. Anteil blau an allen 10 Kugeln = ${F(4,10)}.`);
- } else if(id===7){
-   cards+=practiceCard(7,1,"Dazwischen ist Platz",`Finde zwei Brüche zwischen ${F(1,2)} und ${F(3,4)}. Nutze gemeinsames Erweitern.`,`<div class="mathbig">${F(1,2)} &nbsp; … &nbsp; … &nbsp; ${F(3,4)}</div>`,
-   "Erweitere beide Brüche so, dass zwischen den Zählern mehrere ganze Zahlen liegen.",
-   `Zum Beispiel mit Sechzehnteln: ${F(1,2)}=${F(8,16)} und ${F(3,4)}=${F(12,16)}. Dazwischen liegen etwa ${F(9,16)}, ${F(10,16)} und ${F(11,16)}.`);
-   cards+=practiceCard(7,2,"Zahlenstrahl vergrößern",`Zwischen ${F(2,3)} und ${F(3,4)} soll ein weiterer Bruch gefunden werden. Begründe, warum es nicht nur einen geben kann.`,numberLineVisual(),
-   "Du kannst das Intervall immer weiter unterteilen.",
-   "Zwischen zwei verschiedenen Bruchzahlen liegen immer weitere Bruchzahlen. Durch gemeinsames Erweitern entstehen neue Zwischenwerte; das kann beliebig oft fortgesetzt werden.");
- }
- return `<section><h2>${d.name}</h2><p>${d.goal}</p>${cards}</section>`;
-}
-function numberLineVisual(){
- return `<div class="numline" role="img" aria-label="Zahlenstrahl von 0 bis 1"><div class="axis"></div>
- <span class="tick" style="left:2%"><label>0</label></span><span class="tick" style="left:26%"></span><span class="tick" style="left:50%"><label>${F(1,2)}</label></span><span class="tick" style="left:74%"></span><span class="tick" style="left:98%"><label>1</label></span></div>`;
-}
-function beginRetest(){
- state.mode="retest";state.cycle++;state.res2={};state.i=dims.findIndex(d=>d.id===state.redo[0]);state.stage="q";state.sel=null;
- // swap in parallel tasks temporarily
- dims.forEach(d=>{if(!d._q){d._q=d.q;d._c=d.c} let p=parallel(d.id);d.q=p.q;d.c=p.c});renderTask();
-}
-function parallel(id){
- const P={
- 1:{q:{t:"Ein Rechteck ist in 6 gleich große Teile geteilt. Welcher Anteil ist markiert?",vis:()=>strip(6,4),opts:[["4/6",F(4,6)],["6/4",F(6,4)],["4/2",F(4,2)]],a:"4/6"},c:{t:"Welcher Bruch passt zum markierten Streifen?",vis:()=>strip(3,1),opts:[["1/3",F(1,3)],["3/1",F(3,1)]],a:"1/3"}},
- 2:{q:{t:"Welcher Bruch ist größer?",vis:()=>`<div class="mathbig">${F(1,7)} &nbsp; oder &nbsp; ${F(1,10)}</div>`,opts:[["1/7",F(1,7)],["1/10",F(1,10)]],a:"1/7"},c:{t:"Welcher markierte Anteil ist größer?",vis:()=>`<p>A</p>${strip(7,1)}<p>B</p>${strip(10,1)}`,opts:[["A","A"],["B","B"]],a:"A"}},
- 3:{q:{t:`Welcher Bruch ist gleichwertig zu ${F(3,5)}?`,opts:[["6/10",F(6,10)],["4/6",F(4,6)],["3/10",F(3,10)]],a:"6/10"},c:{t:"Sind die dargestellten Anteile gleich groß?",vis:()=>`${strip(5,3)}${strip(10,6)}`,opts:[["gleich","Ja"],["nicht","Nein"]],a:"gleich"}},
- 4:{q:{t:`Ist ${F(7,6)} größer oder kleiner als 1?`,opts:[["gt1","größer als 1"],["lt1","kleiner als 1"]],a:"gt1"},c:{t:`Ein Ganzes hat 6 Sechstel. Sind ${F(7,6)} mehr als ein Ganzes?`,opts:[["mehr","Ja"],["weniger","Nein"]],a:"mehr"}},
- 5:{q:{t:`Von 15 Murmeln werden ${F(2,5)} genommen. Wie viele sind das?`,opts:[["6","6"],["5","5"],["3","3"]],a:"6"},c:{t:`Was bedeutet ${F(2,5)} von 15?`,opts:[["op","15 in 5 Gruppen teilen und 2 Gruppen nehmen."],["swap","15 in 2 Gruppen teilen und 5 nehmen."]],a:"op"}},
- 6:{q:{t:"5 Brote werden gerecht auf 6 Personen verteilt. Welchen Anteil eines Brotes erhält jede Person?",opts:[["5/6",F(5,6)],["6/5",F(6,5)],["1/6",F(1,6)]],a:"5/6"},c:{t:"Welche Division gehört zur Verteilung?",opts:[["5:6","5 : 6"],["6:5","6 : 5"]],a:"5:6"}},
- 7:{q:{t:`Gibt es zwischen ${F(2,3)} und ${F(3,4)} weitere Brüche?`,opts:[["yes","Ja"],["no","Nein"]],a:"yes"},c:{t:`Welcher Bruch liegt zwischen ${F(4,6)} und ${F(5,6)}?`,opts:[["3/4",F(3,4)],["1/2",F(1,2)],["6/6",F(6,6)]],a:"3/4"}}
- };return P[id]
-}
-function finishRetest(){
- let current={...state.res};
- state.redo.forEach(id=>{current[id]=state.res[id]});
- // restore originals
- dims.forEach(d=>{d.q=d._q;d.c=d._c});
- phase.textContent="Fortschritt";prog.style.width="100%";
- app.innerHTML=`<h1>Dein Bruchprofi-Check</h1><p class="lead">Hier siehst du deinen aktuellen Stand nach der Förderung.</p><div class="grid7">${dims.map(d=>`<div class="status ${state.res[d.id]}"><b>${d.id}. ${d.name}</b><br>${label(state.res[d.id])}</div>`).join("")}</div><div class="actions"><button class="secondary" onclick="window.print()">Aktuelles Profil als PDF</button><button class="secondary" onclick="teacher()">Lehrendenansicht</button><button class="secondary" onclick="downloadDiagnosis()">Diagnosedaten speichern</button></div>`;
-}
-
-function downloadDiagnosis(){
- const payload={
-   titel:"Bruch-Diagnosetrainer",
-   datum:new Date().toLocaleString("de-DE"),
-   status:Object.fromEntries(dims.map(d=>[d.name,{intern:state.res[d.id]||null,lernendenansicht:state.res[d.id]?label(state.res[d.id]):null}])),
-   evidenz:state.evidence,
-   foerderbereiche:dims.filter(d=>state.res[d.id]&&state.res[d.id]!=="A").map(d=>d.name)
- };
- const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
- const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
- a.download="Bruchdiagnose_Ergebnis.json"; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-}
-
-function teacher(){
- phase.textContent="Lehrendenansicht";
- app.innerHTML=`<h1>Lehrendenansicht</h1><p class="lead">Beobachtbare Evidenz und diagnostische Interpretation werden getrennt dargestellt.</p>${dims.map(d=>{let ev=state.evidence[d.id]||[];return `<div class="taskbox"><h3>${d.id}. ${d.name} · ${state.res[d.id]||"–"} (${state.res[d.id]?label(state.res[d.id]):"nicht geprüft"})</h3><p><b>Beobachtung:</b> ${ev.map(e=>`${e.stage==="q"?"Ausgangsaufgabe":"Gegenprobe"}: ${e.correct?"gelöst":"nicht sicher gelöst"}`).join("; ")||"keine Daten"}</p><p><b>Gegenprobe:</b> ${ev.some(e=>e.stage==="c")?"wurde benötigt":"nicht benötigt"}</p><p><b>Diagnostischer Hinweis:</b> ${state.res[d.id]==="A"?"Die bearbeitete Aufgabe liefert in dieser Version Evidenz für eine sichere Grundvorstellung. Bei hoher Ratewahrscheinlichkeit sollte die Lehrendenansicht zusammen mit dem Bearbeitungsweg betrachtet werden.":state.res[d.id]==="B"?"Die Grundvorstellung ist erkennbar; ein Teilaspekt wurde erst nach Gegenprobe sicher.":"Die Ergebnisse sprechen für weiteren Förderbedarf; eine konkrete Fehlvorstellung wird daraus nicht als gesicherte Tatsache abgeleitet."}</p><p><b>Förderempfehlung:</b> ${state.res[d.id]==="A"?"keine zusätzliche Förderung in diesem Bereich":d.goal}</p></div>`}).join("")}<div class="actions no-print"><button class="secondary" onclick="window.print()">Diagnosebericht als PDF</button><button class="secondary" onclick="downloadDiagnosis()">Diagnosedaten speichern</button><button class="secondary" onclick="results()">Zurück zum Profil</button></div>`;
-}
-home();
 </script>
 </body></html>
