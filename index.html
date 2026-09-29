@@ -1,80 +1,168 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bruchtrainer – Diagnose</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bruch-Diagnosetrainer – vollständige Version</title>
 <style>
-:root{--ink:#18202a;--muted:#687482;--line:#dfe5ea;--bg:#f6f8fa;--card:#fff;--accent:#245b78}
-*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
-main{max-width:820px;margin:0 auto;padding:48px 22px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:34px;box-shadow:0 8px 28px rgba(20,30,40,.05)}
-h1{font-size:30px;margin:0 0 12px}h2{font-size:24px;margin:0 0 22px}.lead{font-size:18px;line-height:1.55;color:#3c4854;max-width:650px}
-button{font:inherit;border:0;border-radius:10px;padding:13px 20px;cursor:pointer}.primary{background:var(--accent);color:#fff;font-weight:650}.secondary{background:#edf2f5;color:var(--ink)}
-.actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}.progress{height:5px;background:#e7ecef;border-radius:20px;overflow:hidden;margin-bottom:28px}.progress>div{height:100%;background:#6d8795;transition:.3s}
-.math{font-family:Cambria,"Times New Roman",serif;font-size:32px;text-align:center;margin:28px 0}.question{font-size:20px;line-height:1.5}
-.options{display:grid;gap:11px;margin-top:22px}.option{border:1px solid #ccd5db;background:#fff;text-align:left;padding:15px 17px}.option.selected{outline:2px solid #58798a;background:#f2f6f8}
-input{width:100%;max-width:280px;padding:13px;border:1px solid #bdc8cf;border-radius:9px;font-size:18px;margin-top:16px}
-.note{margin-top:17px;color:var(--muted);min-height:24px}.hidden{display:none}
-.profile{display:grid;gap:12px;margin:24px 0}.row{display:grid;grid-template-columns:180px 1fr;gap:12px;align-items:center}.bar{height:16px;background:#edf0f2;border-radius:10px;overflow:hidden}.fill{height:100%}
-.green{background:#5d8b68}.yellow{background:#c6a548}.red{background:#a96868}.tag{font-weight:650}
-.small{font-size:14px;color:var(--muted);line-height:1.5}
-@media(max-width:600px){main{padding:20px 12px}.card{padding:24px 18px}.row{grid-template-columns:1fr}.math{font-size:28px}}
+:root{--navy:#17365d;--blue:#eaf3fb;--yellow:#fff5cf;--green:#dff3e4;--amber:#fff0b8;--red:#f8d7da;--ink:#1e293b;--muted:#64748b;--line:#cbd5e1}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink);background:#f7f9fc}
+header{background:white;border-bottom:1px solid #e5e7eb;padding:14px 20px;position:sticky;top:0;z-index:5}
+.wrap{max-width:920px;margin:auto}.brand{display:flex;align-items:center;gap:14px}.brand b{color:var(--navy);font-size:1.12rem}
+.progress{height:7px;background:#e8edf4;border-radius:9px;margin-top:10px;overflow:hidden}.progress i{display:block;height:100%;background:var(--navy);width:0;transition:.25s}
+main{max-width:920px;margin:28px auto;padding:0 18px 60px}.card{background:white;border-radius:20px;padding:clamp(22px,4vw,42px);box-shadow:0 10px 28px rgba(23,54,93,.08)}
+h1,h2,h3{color:var(--navy);margin-top:0}h1{font-size:clamp(1.8rem,5vw,3rem)}h2{font-size:clamp(1.35rem,3vw,2rem)}
+.lead{font-size:1.12rem;line-height:1.6}.muted{color:var(--muted)}button,.choice{min-height:52px;border:0;border-radius:13px;padding:13px 18px;font-size:1rem;cursor:pointer;touch-action:manipulation}
+.primary{background:var(--navy);color:white;font-weight:700}.secondary{background:#edf2f7;color:var(--navy);font-weight:650}.choice{display:block;width:100%;text-align:left;background:#f8fafc;border:2px solid #dbe4ef;margin:10px 0}
+.choice:hover,.choice:focus{border-color:#7aa2ce}.choice.selected{border-color:var(--navy);background:var(--blue)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.taskbox{background:var(--blue);padding:22px;border-radius:16px;margin:18px 0}.helpbox{background:var(--yellow);padding:18px;border-radius:14px;margin:18px 0}
+.frac{display:inline-grid;grid-template-rows:auto 2px auto;vertical-align:middle;text-align:center;line-height:1.05;margin:0 .12em;min-width:1.2em}.frac .bar{background:currentColor;width:100%}.frac .top,.frac .bot{padding:.06em .12em}
+.mathbig{font-size:2rem;text-align:center;margin:22px 0}.strip{display:flex;height:52px;border:2px solid var(--navy);border-radius:7px;overflow:hidden;margin:10px 0}.strip span{flex:1;border-right:1px solid var(--navy)}.strip span:last-child{border:0}.strip .fill{background:#8fb9df}
+.numline{position:relative;height:84px;margin:24px 12px}.numline .axis{position:absolute;left:2%;right:2%;top:36px;height:3px;background:var(--navy)}.tick{position:absolute;top:29px;width:2px;height:17px;background:var(--navy)}.tick label{position:absolute;top:20px;transform:translateX(-45%);white-space:nowrap}.dot{position:absolute;top:24px;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--navy);transform:translateX(-50%);cursor:pointer}
+.grid7{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.status{padding:16px;border-radius:14px}.A{background:var(--green)}.B{background:var(--amber)}.C{background:var(--red)}
+.badge{display:inline-block;padding:4px 9px;border-radius:999px;background:#edf2f7;font-size:.86rem}.phase{font-weight:700;color:var(--navy)}
+.small{font-size:.9rem}.hidden{display:none!important}
+@media(max-width:600px){main{margin-top:18px}.card{border-radius:16px;padding:20px}.mathbig{font-size:1.65rem}button,.choice{font-size:1rem;min-height:56px}}
+@media print{header,.no-print{display:none!important}body{background:white}main{margin:0;max-width:none}.card{box-shadow:none;padding:0}.status{break-inside:avoid}}
 </style>
-</head>
-<body><main><section class="card" id="app"></section></main>
-<script>
-const tasks=[
- {area:"Bruch als Anteil",q:"Welcher Bruch beschreibt den markierten Anteil?",visual:"● ● ● ○",opts:["1/4","2/4","3/4","4/3"],a:"3/4"},
- {area:"Brüche vergleichen",q:"Welcher Bruch ist größer?",visual:"3/4  ?  2/3",opts:["3/4","2/3","gleich groß"],a:"3/4"},
- {area:"Gleichwertige Brüche",q:"Welche Zahl fehlt?",visual:"2/3 = ?/12",opts:["6","8","9","10"],a:"8"},
- {area:"Addieren",q:"Berechne.",visual:"1/4 + 2/4",opts:["3/8","3/4","2/8","1/2"],a:"3/4"},
- {area:"Addieren",q:"Berechne.",visual:"1/2 + 1/3",opts:["2/5","2/6","5/6","1/5"],a:"5/6"},
- {area:"Multiplizieren",q:"Berechne.",visual:"2/3 · 3/4",opts:["6/7","6/12","1/2","5/7"],a:"1/2"},
- {area:"Bruchverständnis",q:"Welche Aussage stimmt?",visual:"5/4",opts:["Der Bruch ist kleiner als 1.","Der Bruch ist genau 1.","Der Bruch ist größer als 1."],a:"Der Bruch ist größer als 1."}
-];
-let i=0, answers=[], selected=null;
-const app=document.getElementById("app");
 
-function start(){
- i=0;answers=[];selected=null;renderTask();
-}
-function home(){
- app.innerHTML=`<h1>Bruchtrainer</h1>
- <p class="lead">Kurze Diagnose zum Bruchverständnis. Die Aufgaben prüfen verschiedene Vorstellungen und Rechenideen. Während der Diagnose erhältst du noch keine Richtig-/Falsch-Rückmeldung.</p>
- <div class="actions"><button class="primary" onclick="start()">Diagnose starten</button></div>
- <p class="small" style="margin-top:28px">Bearbeite die Aufgaben möglichst ohne Hilfe. Am Ende erhältst du ein Diagnoseprofil.</p>`;
-}
+<script>
+window.addEventListener("DOMContentLoaded",()=>{
+  if(location.protocol==="file:"){
+    const n=document.createElement("div");
+    n.id="localnote";
+    n.style.cssText="max-width:920px;margin:12px auto 0;padding:10px 18px;color:#64748b;font:14px system-ui,-apple-system,Segoe UI,Arial,sans-serif";
+    n.textContent="Lokale Version: Diese Datei läuft vollständig im Browser. Für Lernende kann dieselbe Datei später unverändert über GitHub Pages, Moodle oder einen anderen Webserver bereitgestellt werden.";
+    document.body.insertBefore(n,document.querySelector("main"));
+  }
+});
+</script>
+
+</head>
+<body>
+<header><div class="wrap"><div class="brand"><b>Bruch-Check</b><span id="phase" class="phase">Start</span></div><div class="progress"><i id="prog"></i></div></div></header>
+<main><section id="app" class="card"></section></main>
+<script>
+const F=(a,b)=>`<span class="frac" aria-label="${a} ${b}tel"><span class="top">${a}</span><span class="bar"></span><span class="bot">${b}</span></span>`;
+const dims=[
+{id:1,name:"Teil–Ganzes / Anteil",goal:"Brüche als Anteil eines Ganzen verstehen.",
+ q:{t:"Ein Rechteck ist in 5 gleich große Teile geteilt. Welcher Anteil ist markiert?",vis:()=>strip(5,2),opts:[["2/5",F(2,5)],["5/2",F(5,2)],["2/3",F(2,3)]],a:"2/5"},
+ c:{t:"Ein Streifen ist in 4 gleich große Teile geteilt. Ein Teil ist markiert. Welcher Bruch passt?",vis:()=>strip(4,1),opts:[["1/4",F(1,4)],["4/1",F(4,1)]],a:"1/4"}},
+{id:2,name:"Bruch als Zahl / Größenvergleich",goal:"Brüche als Zahlen vergleichen und einordnen.",
+ q:{t:"Welcher Bruch ist größer?",vis:()=>`<div class="mathbig">${F(1,5)} &nbsp; oder &nbsp; ${F(1,8)}</div>`,opts:[["1/5",F(1,5)],["1/8",F(1,8)]],a:"1/5"},
+ c:{t:"Welcher markierte Anteil ist größer?",vis:()=>`<p>A</p>${strip(5,1)}<p>B</p>${strip(8,1)}`,opts:[["A","A"],["B","B"]],a:"A"}},
+{id:3,name:"Äquivalenz – Erweitern / Kürzen",goal:"Gleichwertige Brüche als dieselbe Zahl erkennen.",
+ q:{t:`Welcher Bruch hat denselben Wert wie ${F(1,2)}?`,opts:[["2/4",F(2,4)],["2/3",F(2,3)],["1/4",F(1,4)]],a:"2/4"},
+ c:{t:"Welche beiden Streifen zeigen denselben Anteil?",vis:()=>`${strip(2,1)}${strip(4,2)}`,opts:[["gleich","Die markierten Anteile sind gleich groß."],["nicht","Sie sind nicht gleich groß."]],a:"gleich"}},
+{id:4,name:"Unechte Brüche / mehrere Ganze",goal:"Brüche größer als 1 als Zahlen verstehen.",
+ q:{t:`Welche Zahl beschreibt ${F(5,4)} richtig?`,opts:[["gt1","größer als 1"],["lt1","kleiner als 1"],["eq1","genau 1"]],a:"gt1"},
+ c:{t:`Ein Ganzes besteht aus 4 Vierteln. Sind ${F(5,4)} mehr oder weniger als ein Ganzes?`,vis:()=>`${strip(4,4)}${strip(4,1)}`,opts:[["mehr","mehr als ein Ganzes"],["weniger","weniger als ein Ganzes"]],a:"mehr"}},
+{id:5,name:"Operatorvorstellung",goal:"Einen Bruch als Anteil von einer Größe anwenden.",
+ q:{t:`12 Äpfel. Davon werden ${F(3,4)} genommen. Wie viele Äpfel sind das?`,opts:[["9","9"],["4","4"],["3","3"],["16","16"]],a:"9"},
+ c:{t:`Was bedeutet ${F(3,4)} von 12?`,opts:[["op","12 in 4 gleich große Gruppen teilen und 3 Gruppen nehmen."],["swap","12 in 3 Gruppen teilen und 4 Gruppen nehmen."],["sub","Von 12 die Zahlen 3 und 4 abziehen."]],a:"op"}},
+{id:6,name:"Quotient und Verhältnis",goal:"Brüche als Quotient und Verhältnis unterscheiden.",
+ q:{t:`3 Pizzen werden gerecht auf 4 Lernende verteilt. Wie viel Pizza erhält jede Person?`,opts:[["3/4",F(3,4)],["4/3",F(4,3)],["1/4",F(1,4)]],a:"3/4"},
+ c:{t:"Welche Rechnung beschreibt die gerechte Verteilung von 3 Ganzen auf 4 Personen?",opts:[["3:4","3 : 4"],["4:3","4 : 3"],["3+4","3 + 4"]],a:"3:4"}},
+{id:7,name:"Dichte der Bruchzahlen",goal:"Verstehen, dass zwischen zwei Brüchen weitere Brüche liegen.",
+ q:{t:`Gibt es zwischen ${F(1,2)} und ${F(3,4)} noch einen weiteren Bruch?`,opts:[["yes","Ja"],["no","Nein, diese Brüche sind Nachbarn."]],a:"yes"},
+ c:{t:`Welcher Bruch liegt zwischen ${F(2,4)} und ${F(3,4)}?`,opts:[["5/8",F(5,8)],["1/4",F(1,4)],["4/4",F(4,4)]],a:"5/8"}}
+];
+function strip(n,k){return `<div class="strip" aria-label="${k} von ${n} Teilen markiert">${Array.from({length:n},(_,i)=>`<span class="${i<k?'fill':''}"></span>`).join("")}</div>`}
+let state={i:0,stage:"q",sel:null,res:{},evidence:{},mode:"diagnose",redo:[],cycle:0};
+const app=document.querySelector("#app"),phase=document.querySelector("#phase"),prog=document.querySelector("#prog");
+function start(){state={i:0,stage:"q",sel:null,res:{},evidence:{},mode:"diagnose",redo:[],cycle:0};renderTask()}
+function home(){phase.textContent="Start";prog.style.width="0";app.innerHTML=`<h1>Bruch-Check</h1><p class="lead">Der Bruch-Check untersucht sieben zentrale Grundvorstellungen zu Brüchen. Die Diagnose läuft neutral und ohne richtig/falsch-Rückmeldung. Anschließend erhältst du ein persönliches Profil, passende Förderaufgaben und – falls nötig – einen kurzen Bruchprofi-Check.</p><div class="helpbox"><b>Wichtig:</b> Es geht nicht um eine Note. Wenn du unsicher bist, kannst du das sagen. Während des Checks bekommst du bewusst keine Lösungshinweise.</div><div class="actions"><button class="primary" onclick="start()">Bruch-Check starten</button></div><p class="muted small">Vollständige Einzeldatei · für iPad/Tablet, Desktop und Smartphone · keine Anmeldung erforderlich</p>`}
 function renderTask(){
- const t=tasks[i]; const pct=Math.round((i/tasks.length)*100);
- app.innerHTML=`<div class="progress" aria-label="Fortschritt"><div style="width:${pct}%"></div></div>
- <h2>${t.area}</h2><div class="question">${t.q}</div><div class="math">${t.visual}</div>
- <div class="options">${t.opts.map((o,k)=>`<button class="option" data-v="${o.replaceAll('"','&quot;')}" onclick="pick(this)">${o}</button>`).join("")}</div>
- <div class="note" id="note"></div>
- <div class="actions"><button class="primary" id="next" onclick="save()" disabled>Antwort speichern</button></div>`;
+ let d=dims[state.i],x=d[state.stage]; phase.textContent=state.mode==="retest"?"Bruchprofi-Check":"Diagnose";
+ prog.style.width=`${Math.round((state.i+0.2)/dims.length*100)}%`;
+ app.innerHTML=`<span class="badge">${state.mode==="retest"?"Bruchprofi-Check":"Bruch-Check"} · Bereich ${d.id}</span><h2>${d.name}</h2><div class="taskbox"><h3>${x.t}</h3>${x.vis?x.vis():""}<div id="opts">${x.opts.map(o=>`<button class="choice" data-v="${o[0]}">${o[1]}</button>`).join("")}<button class="choice" data-v="?">Ich bin mir nicht sicher.</button></div></div><p class="muted small">Wähle die Antwort, die du für richtig hältst. Es gibt während der Diagnose keine inhaltlichen Hinweise.</p><div class="actions"><button id="next" class="primary" disabled>Antwort speichern</button></div>`;
+ document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{document.querySelectorAll(".choice").forEach(z=>z.classList.remove("selected"));b.classList.add("selected");state.sel=b.dataset.v;document.querySelector("#next").disabled=false});
+ document.querySelector("#next").onclick=submit;
 }
-function pick(el){
- document.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));
- el.classList.add("selected"); selected=el.dataset.v; document.getElementById("next").disabled=false;
+function submit(){
+ let d=dims[state.i],x=d[state.stage],ok=state.sel===x.a;
+ if(!state.evidence[d.id])state.evidence[d.id]=[];
+ state.evidence[d.id].push({stage:state.stage,answer:state.sel,correct:ok,mode:state.mode});
+ if(state.stage==="q"){
+   if(ok){state.res[d.id]="A";advance()}
+   else{state.stage="c";state.sel=null;renderTask()}
+ }else{
+   if(ok)state.res[d.id]="B"; else state.res[d.id]="C";
+   advance();
+ }
 }
-function save(){
- const t=tasks[i]; answers.push({area:t.area,ok:selected===t.a});
- document.getElementById("note").textContent="Antwort gespeichert.";
- selected=null;i++;
- setTimeout(()=>{i<tasks.length?renderTask():result()},350);
+function advance(){
+ state.stage="q";state.sel=null;
+ if(state.mode==="retest"){
+   let pos=state.redo.indexOf(dims[state.i].id);
+   if(pos<state.redo.length-1){state.i=dims.findIndex(d=>d.id===state.redo[pos+1]);renderTask()}else finishRetest();
+ }else if(state.i<dims.length-1){state.i++;renderTask()}else results();
 }
-function result(){
- const areas={};
- answers.forEach(x=>{areas[x.area]??={n:0,k:0};areas[x.area].n++;areas[x.area].k+=x.ok?1:0});
- const rows=Object.entries(areas).map(([name,v])=>{
-   const p=v.k/v.n; const cls=p>=.8?"green":p>.5?"yellow":"red";
-   const txt=p>=.8?"sicher":p>.5?"noch festigen":"weiter aufbauen";
-   return `<div class="row"><div><span class="tag">${name}</span><br><span class="small">${txt}</span></div><div class="bar"><div class="fill ${cls}" style="width:${Math.max(15,p*100)}%"></div></div></div>`;
- }).join("");
- app.innerHTML=`<h1>Dein Diagnoseprofil</h1>
- <p class="lead">Das Profil zeigt, welche Bereiche bereits sicher wirken und wo weiteres Üben sinnvoll ist.</p>
- <div class="profile">${rows}</div>
- <p class="small">Grün = sicher · Gelb = noch festigen · Rot = weiter aufbauen. Das Ergebnis ist eine Lernstandsorientierung und keine Note.</p>
- <div class="actions"><button class="primary" onclick="start()">Noch einmal durchführen</button></div>`;
+const label=r=>r==="A"?"sicher":r==="B"?"noch festigen":"weiter aufbauen";
+function results(){
+ phase.textContent="Dein Profil";prog.style.width="100%";
+ let needs=dims.filter(d=>state.res[d.id]!=="A");
+ app.innerHTML=`<h1>Dein Bruch-Profil</h1><p class="lead">Hier siehst du, welche Vorstellungen schon sicher sind und wo sich weiteres Üben lohnt.</p><div class="grid7">${dims.map(d=>`<div class="status ${state.res[d.id]}"><b>${d.id}. ${d.name}</b><br>${label(state.res[d.id])}</div>`).join("")}</div>
+ <h2 style="margin-top:30px">Deine nächsten Schritte</h2>${needs.length?needs.map(d=>`<div class="helpbox"><b>${d.name}</b><br>${d.goal}<br><span class="small">Dazu erhältst du jetzt gezielte Förderaufgaben.</span></div>`).join(""):`<div class="status A"><b>Alle Bereiche sind sicher.</b><br>Du hast in dieser Version in allen sieben Bereichen sichere Evidenz gezeigt.</div>`}
+ <div class="actions no-print">${needs.length?`<button class="primary" onclick="practice()">Passende Förderaufgaben starten</button>`:""}<button class="secondary" onclick="window.print()">Profil als PDF drucken/speichern</button><button class="secondary" onclick="teacher()">Lehrendenansicht</button><button class="secondary" onclick="downloadDiagnosis()">Diagnosedaten speichern</button></div>`;
+}
+function practice(){
+ state.redo=dims.filter(d=>state.res[d.id]!=="A").map(d=>d.id);phase.textContent="Förderung";
+ let blocks=state.redo.map(id=>{let d=dims.find(x=>x.id===id);return `<div class="helpbox"><h3>${d.name}</h3><p><b>Daran arbeitest du jetzt:</b> ${d.goal}</p><p>${practiceText(id)}</p></div>`}).join("");
+ app.innerHTML=`<h1>Jetzt wird geübt</h1><p class="lead">Hier darfst du ausprobieren, nachdenken und Hilfen nutzen. Geübt werden nur die Bereiche, bei denen dein Check Förderbedarf gezeigt hat.</p>${blocks}<div class="actions"><button class="primary" onclick="beginRetest()">Ich habe meine Förderaufgaben bearbeitet. Jetzt will ich zeigen, was ich kann!</button><button class="secondary" onclick="window.print()">Meine Förderaufgaben als PDF</button></div><p class="muted">Im Bruchprofi-Check prüfen wir nur diese Bereiche noch einmal – mit neuen Aufgaben.</p>`;
+}
+function practiceText(id){
+ const t={
+ 1:`Zeichne drei gleich lange Streifen. Teile sie in 2, 4 und 8 gleich große Teile. Markiere jeweils denselben Anteil: ${F(1,2)}, ${F(2,4)}, ${F(4,8)}. Beschreibe, was Zähler und Nenner angeben.`,
+ 2:`Ordne ${F(1,3)}, ${F(1,5)} und ${F(1,8)} der Größe nach. Nutze zuerst Streifen und übertrage die Brüche anschließend auf einen Zahlenstrahl.`,
+ 3:`Stelle ${F(2,3)} als Streifen dar. Verfeinere jeden Drittelteil in zwei gleich große Teile. Welcher gleichwertige Bruch entsteht? Erkläre, warum sich der Wert nicht ändert.`,
+ 4:`Lege mit Viertel-Streifen zuerst ${F(4,4)}, dann ${F(5,4)} und ${F(7,4)}. Markiere, wo jeweils ein Ganzes überschritten wird.`,
+ 5:`Bestimme ${F(2,3)} von 12 Plättchen: Teile zuerst in 3 gleich große Gruppen und nimm anschließend 2 Gruppen. Formuliere die beiden Schritte mit eigenen Worten.`,
+ 6:`Verteile 5 gleich große Kuchen gerecht auf 6 Personen. Notiere die Division und den Bruch, der den Anteil pro Person beschreibt. Erkläre die Verbindung.`,
+ 7:`Markiere ${F(1,2)} und ${F(3,4)} auf einem Zahlenstrahl. Vergrößere den Abschnitt und finde mindestens drei verschiedene Brüche dazwischen.`
+ };return t[id]
+}
+function beginRetest(){
+ state.mode="retest";state.cycle++;state.res2={};state.i=dims.findIndex(d=>d.id===state.redo[0]);state.stage="q";state.sel=null;
+ // swap in parallel tasks temporarily
+ dims.forEach(d=>{if(!d._q){d._q=d.q;d._c=d.c} let p=parallel(d.id);d.q=p.q;d.c=p.c});renderTask();
+}
+function parallel(id){
+ const P={
+ 1:{q:{t:"Ein Rechteck ist in 6 gleich große Teile geteilt. Welcher Anteil ist markiert?",vis:()=>strip(6,4),opts:[["4/6",F(4,6)],["6/4",F(6,4)],["4/2",F(4,2)]],a:"4/6"},c:{t:"Welcher Bruch passt zum markierten Streifen?",vis:()=>strip(3,1),opts:[["1/3",F(1,3)],["3/1",F(3,1)]],a:"1/3"}},
+ 2:{q:{t:"Welcher Bruch ist größer?",vis:()=>`<div class="mathbig">${F(1,7)} &nbsp; oder &nbsp; ${F(1,10)}</div>`,opts:[["1/7",F(1,7)],["1/10",F(1,10)]],a:"1/7"},c:{t:"Welcher markierte Anteil ist größer?",vis:()=>`<p>A</p>${strip(7,1)}<p>B</p>${strip(10,1)}`,opts:[["A","A"],["B","B"]],a:"A"}},
+ 3:{q:{t:`Welcher Bruch ist gleichwertig zu ${F(3,5)}?`,opts:[["6/10",F(6,10)],["4/6",F(4,6)],["3/10",F(3,10)]],a:"6/10"},c:{t:"Sind die dargestellten Anteile gleich groß?",vis:()=>`${strip(5,3)}${strip(10,6)}`,opts:[["gleich","Ja"],["nicht","Nein"]],a:"gleich"}},
+ 4:{q:{t:`Ist ${F(7,6)} größer oder kleiner als 1?`,opts:[["gt1","größer als 1"],["lt1","kleiner als 1"]],a:"gt1"},c:{t:`Ein Ganzes hat 6 Sechstel. Sind ${F(7,6)} mehr als ein Ganzes?`,opts:[["mehr","Ja"],["weniger","Nein"]],a:"mehr"}},
+ 5:{q:{t:`Von 15 Murmeln werden ${F(2,5)} genommen. Wie viele sind das?`,opts:[["6","6"],["5","5"],["3","3"]],a:"6"},c:{t:`Was bedeutet ${F(2,5)} von 15?`,opts:[["op","15 in 5 Gruppen teilen und 2 Gruppen nehmen."],["swap","15 in 2 Gruppen teilen und 5 nehmen."]],a:"op"}},
+ 6:{q:{t:"5 Brote werden gerecht auf 6 Personen verteilt. Welchen Anteil eines Brotes erhält jede Person?",opts:[["5/6",F(5,6)],["6/5",F(6,5)],["1/6",F(1,6)]],a:"5/6"},c:{t:"Welche Division gehört zur Verteilung?",opts:[["5:6","5 : 6"],["6:5","6 : 5"]],a:"5:6"}},
+ 7:{q:{t:`Gibt es zwischen ${F(2,3)} und ${F(3,4)} weitere Brüche?`,opts:[["yes","Ja"],["no","Nein"]],a:"yes"},c:{t:`Welcher Bruch liegt zwischen ${F(4,6)} und ${F(5,6)}?`,opts:[["3/4",F(3,4)],["1/2",F(1,2)],["6/6",F(6,6)]],a:"3/4"}}
+ };return P[id]
+}
+function finishRetest(){
+ let current={...state.res};
+ state.redo.forEach(id=>{current[id]=state.res[id]});
+ // restore originals
+ dims.forEach(d=>{d.q=d._q;d.c=d._c});
+ phase.textContent="Fortschritt";prog.style.width="100%";
+ app.innerHTML=`<h1>Dein Bruchprofi-Check</h1><p class="lead">Hier siehst du deinen aktuellen Stand nach der Förderung.</p><div class="grid7">${dims.map(d=>`<div class="status ${state.res[d.id]}"><b>${d.id}. ${d.name}</b><br>${label(state.res[d.id])}</div>`).join("")}</div><div class="actions"><button class="secondary" onclick="window.print()">Aktuelles Profil als PDF</button><button class="secondary" onclick="teacher()">Lehrendenansicht</button><button class="secondary" onclick="downloadDiagnosis()">Diagnosedaten speichern</button></div>`;
+}
+
+function downloadDiagnosis(){
+ const payload={
+   titel:"Bruch-Diagnosetrainer",
+   datum:new Date().toLocaleString("de-DE"),
+   status:Object.fromEntries(dims.map(d=>[d.name,{intern:state.res[d.id]||null,lernendenansicht:state.res[d.id]?label(state.res[d.id]):null}])),
+   evidenz:state.evidence,
+   foerderbereiche:dims.filter(d=>state.res[d.id]&&state.res[d.id]!=="A").map(d=>d.name)
+ };
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+ const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+ a.download="Bruchdiagnose_Ergebnis.json"; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+
+function teacher(){
+ phase.textContent="Lehrendenansicht";
+ app.innerHTML=`<h1>Lehrendenansicht</h1><p class="lead">Beobachtbare Evidenz und diagnostische Interpretation werden getrennt dargestellt.</p>${dims.map(d=>{let ev=state.evidence[d.id]||[];return `<div class="taskbox"><h3>${d.id}. ${d.name} · ${state.res[d.id]||"–"} (${state.res[d.id]?label(state.res[d.id]):"nicht geprüft"})</h3><p><b>Beobachtung:</b> ${ev.map(e=>`${e.stage==="q"?"Ausgangsaufgabe":"Gegenprobe"}: ${e.correct?"gelöst":"nicht sicher gelöst"}`).join("; ")||"keine Daten"}</p><p><b>Gegenprobe:</b> ${ev.some(e=>e.stage==="c")?"wurde benötigt":"nicht benötigt"}</p><p><b>Diagnostischer Hinweis:</b> ${state.res[d.id]==="A"?"Die bearbeitete Aufgabe liefert in dieser Version Evidenz für eine sichere Grundvorstellung. Bei hoher Ratewahrscheinlichkeit sollte die Lehrendenansicht zusammen mit dem Bearbeitungsweg betrachtet werden.":state.res[d.id]==="B"?"Die Grundvorstellung ist erkennbar; ein Teilaspekt wurde erst nach Gegenprobe sicher.":"Die Ergebnisse sprechen für weiteren Förderbedarf; eine konkrete Fehlvorstellung wird daraus nicht als gesicherte Tatsache abgeleitet."}</p><p><b>Förderempfehlung:</b> ${state.res[d.id]==="A"?"keine zusätzliche Förderung in diesem Bereich":d.goal}</p></div>`}).join("")}<div class="actions no-print"><button class="secondary" onclick="window.print()">Diagnosebericht als PDF</button><button class="secondary" onclick="downloadDiagnosis()">Diagnosedaten speichern</button><button class="secondary" onclick="results()">Zurück zum Profil</button></div>`;
 }
 home();
-</script></body></html>
+</script>
+</body></html>
