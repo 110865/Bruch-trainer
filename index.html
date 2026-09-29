@@ -1,17 +1,31 @@
 <!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Bruch-Diagnosetrainer V6 – interaktiv</title>
+<title>Bruch-Diagnosetrainer V7 – interaktiv</title>
 <style>
 :root{--n:#17324d;--b:#eaf4fb;--y:#fff6cf;--g:#dff3e4;--r:#fde3e3;--m:#fff0b8;--ink:#18222c;--mut:#607080;--line:#c7d5df;--sel:#8fc2df}
 *{box-sizing:border-box}body{margin:0;background:#f5f8fa;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}header{background:var(--n);color:#fff;padding:14px 18px}.head{max-width:980px;margin:auto;display:flex;justify-content:space-between;gap:16px}.brand{font-weight:800}main{max-width:980px;margin:24px auto;padding:0 16px 48px}.card{background:#fff;border:1px solid #e0e8ee;border-radius:18px;padding:24px;box-shadow:0 8px 24px #17324d0d}h1,h2{color:var(--n)}h1{font-size:clamp(1.65rem,4vw,2.35rem);margin-top:0}.lead{font-size:1.08rem;line-height:1.55}.small{font-size:.9rem;color:var(--mut)}.hidden{display:none!important}.source{border-left:4px solid var(--n);background:#f6f9fb;padding:12px 14px;margin:18px 0;line-height:1.45}.progress{height:8px;background:#e3ebf0;border-radius:10px;overflow:hidden;margin:12px 0 5px}.bar{height:100%;background:#7ca7c4}.task{background:var(--b);border-radius:16px;padding:18px;margin:15px 0}.task.deep{background:var(--y)}button{font:inherit;min-height:46px;border:0;border-radius:11px;padding:11px 15px;cursor:pointer;touch-action:manipulation}.primary{background:var(--n);color:#fff;font-weight:700}.secondary{background:#edf2f5;color:var(--n);font-weight:650}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.choice{width:100%;text-align:left;background:#fff;border:2px solid var(--line);margin:8px 0}.choice.sel{border-color:var(--n);background:var(--b)}.frac{display:inline-flex;vertical-align:middle;flex-direction:column;align-items:center;line-height:1.05;margin:0 .12em}.frac .t{border-bottom:1.8px solid;padding:0 .2em .08em}.frac .d{padding:.08em .2em 0}.math{font-size:1.2rem}.statusgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.status{border-radius:14px;padding:14px}.A{background:var(--g)}.B{background:var(--m)}.C{background:var(--r)}.hint{background:var(--y);border-radius:12px;padding:12px;margin-top:10px}
 .strip{display:flex;width:min(100%,600px);height:78px;border:2px solid var(--n);margin:16px 0;user-select:none;touch-action:pan-y}.strip .part{flex:1;border-right:1px solid var(--n);background:#fff;min-width:0}.strip .part:last-child{border-right:0}.strip .part.on{background:var(--sel)}
 .circleWrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.circle{width:220px;max-width:70vw;aspect-ratio:1;border-radius:50%;position:relative;background:conic-gradient(var(--sel) 0deg 0deg,#fff 0deg 360deg);border:2px solid var(--n)}.circle:after{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-conic-gradient(transparent 0deg calc(var(--step) - 1deg),var(--n) calc(var(--step) - 1deg) var(--step));pointer-events:none}.stepper{display:flex;align-items:center;gap:10px}.stepper button{font-size:1.25rem;min-width:48px}
-.nl{width:100%;max-width:700px;padding:25px 14px 42px;position:relative;touch-action:pan-y}.track{height:4px;background:var(--n);position:relative}.track:before,.track:after{content:"";position:absolute;top:-7px;width:2px;height:18px;background:var(--n)}.track:before{left:0}.track:after{right:0}.handle{position:absolute;top:-18px;width:36px;height:36px;border-radius:50%;background:var(--sel);border:3px solid var(--n);transform:translateX(-50%);touch-action:none}.ticks{position:relative;height:28px}.tick{position:absolute;top:0;transform:translateX(-50%);font-size:.82rem}.nlControls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.val{min-width:90px;font-weight:700}
+.nl{width:100%;max-width:700px;padding:22px 8px 12px}
+.numberAxis{position:relative;padding:18px 0 0}
+.axisLine{height:4px;background:var(--n);position:relative;margin:0 14px}
+.axisLine:before,.axisLine:after{content:"";position:absolute;top:-7px;width:3px;height:18px;background:var(--n)}
+.axisLine:before{left:0}.axisLine:after{right:0}
+.endLabels{display:flex;justify-content:space-between;margin:8px 7px 0;font-weight:800;color:var(--n);font-size:1.05rem}
+.rangeWrap{position:relative;margin-top:-34px;padding:0 2px 34px}
+.mathRange{width:100%;height:44px;margin:0;appearance:none;-webkit-appearance:none;background:transparent;touch-action:pan-y}
+.mathRange::-webkit-slider-runnable-track{height:4px;background:transparent}
+.mathRange::-moz-range-track{height:4px;background:transparent}
+.mathRange::-webkit-slider-thumb{-webkit-appearance:none;width:42px;height:42px;border-radius:50%;background:var(--sel);border:3px solid var(--n);margin-top:-19px;cursor:grab}
+.mathRange::-moz-range-thumb{width:38px;height:38px;border-radius:50%;background:var(--sel);border:3px solid var(--n);cursor:grab}
+.mathRange:focus-visible{outline:3px solid #5b91b5;outline-offset:4px;border-radius:8px}
+.nlControls{display:grid;grid-template-columns:minmax(120px,1fr) auto minmax(120px,1fr);gap:10px;align-items:center;margin-top:6px}
+.nlControls button{white-space:nowrap}.val{min-width:100px;text-align:center;font-weight:800;font-size:1.15rem}
 .order{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.chip{background:#fff;border:2px solid var(--line);font-size:1.15rem}.chip.active{border-color:var(--n);background:var(--b)}.slots{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.slot{min-width:86px;min-height:52px;border:2px dashed #9fb2c0;border-radius:10px;display:grid;place-items:center;background:#fff}
 .teacherBlock{border-left:4px solid #8ba8bc;background:#f6f9fb;padding:10px 12px;margin:9px 0}.badge{font-size:.82rem;background:#edf2f5;padding:4px 8px;border-radius:20px}
 @media(max-width:600px){.card{padding:17px}.actions button{width:100%}.circle{width:180px}.nl{padding-left:5px;padding-right:5px}}
 @media print{header,.noPrint{display:none!important}body{background:#fff}.card{box-shadow:none;border:0}}
 </style></head><body>
-<header><div class="head"><div class="brand">Bruch-Diagnosetrainer V6</div><div id="mode">Start</div></div></header><main>
+<header><div class="head"><div class="brand">Bruch-Diagnosetrainer V7</div><div id="mode">Start</div></div></header><main>
 <section id="start" class="card"><h1>Brüche verstehen – dein Diagnose-Check</h1>
 <p class="lead">Der Trainer prüft verschiedene Grundvorstellungen zu Brüchen. Manche Aufgaben beantwortest du, bei anderen handelst du direkt mit Zahlenstrahl, Bruchstreifen oder Kreismodell.</p>
 <div class="source"><b>Fachdidaktische Bezugsquellen</b><br>Padberg und Wittmann: fachdidaktische Arbeiten zu Bruchverständnis, Grundvorstellungen, Darstellungen und verstehensorientiertem Mathematiklernen.<br>SMART: Fehlermusterdiagnose; Bezug auf „SMART-Test-Aufgaben und mögliche Fehlvorstellungen“, Friedrich Verlag 2017.<br><span class="small">Die Aufgaben sind eigenständig formuliert. Konkrete Literaturangaben werden nur verwendet, wenn sie verifiziert vorliegen.</span></div>
@@ -100,13 +114,44 @@ function renderInteraction(t,id,practice){
  if(t.type==="mc"){h.innerHTML=t.opts.map((o,i)=>`<button type="button" class="choice" data-i="${i}">${o}</button>`).join("");h.querySelectorAll(".choice").forEach(b=>b.addEventListener("click",()=>{S.answer=+b.dataset.i;h.querySelectorAll(".choice").forEach(x=>x.classList.remove("sel"));b.classList.add("sel")}));}
  if(t.type==="strip"){let n=t.n;h.innerHTML=`<p class="small">Tippe die Teile an, die du markieren möchtest.</p><div class="strip" aria-label="Interaktiver Bruchstreifen">${Array.from({length:n},(_,i)=>`<button type="button" class="part" data-i="${i}" aria-label="Teil ${i+1}"></button>`).join("")}</div><div class="small">Markiert: <span class="count">0</span> von ${n}</div>`;let set=new Set();h.querySelectorAll(".part").forEach(p=>p.addEventListener("click",()=>{let i=+p.dataset.i;set.has(i)?set.delete(i):set.add(i);p.classList.toggle("on");h.querySelector(".count").textContent=set.size;S.answer={kind:"strip",count:set.size,n}}));}
  if(t.type==="circle"){let n=t.n,k=0,step=360/n;h.innerHTML=`<div class="circleWrap"><div class="circle" style="--step:${step}deg"></div><div><div class="stepper"><button type="button" class="minus">−</button><b class="cv">0 / ${n}</b><button type="button" class="plus">+</button></div><p class="small">Verändere die Zahl der markierten Kreissegmente.</p></div></div>`;let draw=()=>{h.querySelector(".circle").style.background=`conic-gradient(var(--sel) 0deg ${k*step}deg,#fff ${k*step}deg 360deg)`;h.querySelector(".cv").textContent=`${k} / ${n}`;S.answer={kind:"circle",count:k,n}};h.querySelector(".plus").onclick=()=>{k=Math.min(n,k+1);draw()};h.querySelector(".minus").onclick=()=>{k=Math.max(0,k-1);draw()};draw();}
- if(t.type==="number"){let max=t.max||1,den=t.den||10,pos=.5;h.innerHTML=`<div class="nl"><div class="track"><button type="button" class="handle" aria-label="Punkt auf dem Zahlenstrahl verschieben"></button></div><div class="ticks">${Array.from({length:max+1},(_,i)=>`<span class="tick" style="left:${i/max*100}%">${i}</span>`).join("")}</div><div class="nlControls"><button type="button" class="left">◀</button><span class="val"></span><button type="button" class="right">▶</button><span class="small">Du kannst den Punkt auch ziehen.</span></div></div>`;
- let tr=h.querySelector(".track"),ha=h.querySelector(".handle"),val=h.querySelector(".val"),step=max/den;
- const set=x=>{pos=Math.max(0,Math.min(max,Math.round(x/step)*step));ha.style.left=(pos/max*100)+"%";let num=Math.round(pos/step),g=gcd(num,den);val.innerHTML=num===0?"0":F(num/g,den/g);S.answer={kind:"number",value:pos}};
- set(max/2);h.querySelector(".left").onclick=()=>set(pos-step);h.querySelector(".right").onclick=()=>set(pos+step);
- const move=e=>{let r=tr.getBoundingClientRect();set((e.clientX-r.left)/r.width*max)};
- ha.addEventListener("pointerdown",e=>{ha.setPointerCapture(e.pointerId);move(e)});ha.addEventListener("pointermove",e=>{if(ha.hasPointerCapture(e.pointerId))move(e)});ha.addEventListener("pointerup",e=>{if(ha.hasPointerCapture(e.pointerId))ha.releasePointerCapture(e.pointerId)});
- }
+ if(t.type==="number"){
+ let max=t.max||1,den=t.den||10,step=max/den,start=max/2;
+ const decimals=6;
+ h.innerHTML=`<div class="nl">
+   <div class="numberAxis" aria-label="Zahlenstrahl von 0 bis ${max}">
+     <div class="axisLine"></div>
+     <div class="endLabels"><span>0</span><span>${max}</span></div>
+     <div class="rangeWrap">
+       <input class="mathRange" type="range" min="0" max="${max}" step="${step}" value="${start}" aria-label="Punkt auf dem Zahlenstrahl verschieben">
+     </div>
+   </div>
+   <div class="nlControls">
+     <button type="button" class="left secondary">◀ kleiner</button>
+     <span class="val" aria-live="polite"></span>
+     <button type="button" class="right secondary">größer ▶</button>
+   </div>
+   <p class="small" style="text-align:center;margin:.55rem 0 0">Ziehe den blauen Punkt oder benutze die beiden Tasten.</p>
+ </div>`;
+ let range=h.querySelector(".mathRange"),val=h.querySelector(".val"),pos=start;
+ const showValue=x=>{
+   let units=Math.round(x/step);
+   // value = units * max/den; reduce integer numerator against denominator
+   let num=units*Math.round(max);
+   let d=den,g=gcd(Math.abs(num),d);
+   if(Math.abs(x-Math.round(x))<1e-7) val.textContent=String(Math.round(x));
+   else val.innerHTML=F(num/g,d/g);
+ };
+ const set=x=>{
+   pos=Math.max(0,Math.min(max,Math.round(x/step)*step));
+   range.value=String(pos);
+   showValue(pos);
+   S.answer={kind:"number",value:pos};
+ };
+ range.addEventListener("input",()=>set(parseFloat(range.value)));
+ h.querySelector(".left").addEventListener("click",()=>set(pos-step));
+ h.querySelector(".right").addEventListener("click",()=>set(pos+step));
+ set(start);
+}
  if(t.type==="order"){let selected=null,placed=[];h.innerHTML=`<p class="small">Wähle einen Bruch und setze ihn nacheinander in die Felder.</p><div class="order">${t.items.map(x=>`<button type="button" class="chip" data-v="${x[0]}/${x[1]}">${F(x[0],x[1])}</button>`).join("")}</div><div class="slots">${t.items.map((_,i)=>`<button type="button" class="slot" data-s="${i}">${i+1}.</button>`).join("")}</div>`;h.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{selected=c.dataset.v;h.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));c.classList.add("active")});h.querySelectorAll(".slot").forEach(s=>s.onclick=()=>{if(!selected)return;let idx=+s.dataset.s;placed[idx]=selected;let [a,b]=selected.split("/");s.innerHTML=F(a,b);S.answer={kind:"order",values:placed.slice()}})}
 }
 function gcd(a,b){while(b){[a,b]=[b,a%b]}return a||1}
