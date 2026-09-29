@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bruchtrainer – Diagnose</title>
+<style>
+:root{--ink:#18202a;--muted:#687482;--line:#dfe5ea;--bg:#f6f8fa;--card:#fff;--accent:#245b78}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+main{max-width:820px;margin:0 auto;padding:48px 22px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:34px;box-shadow:0 8px 28px rgba(20,30,40,.05)}
+h1{font-size:30px;margin:0 0 12px}h2{font-size:24px;margin:0 0 22px}.lead{font-size:18px;line-height:1.55;color:#3c4854;max-width:650px}
+button{font:inherit;border:0;border-radius:10px;padding:13px 20px;cursor:pointer}.primary{background:var(--accent);color:#fff;font-weight:650}.secondary{background:#edf2f5;color:var(--ink)}
+.actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}.progress{height:5px;background:#e7ecef;border-radius:20px;overflow:hidden;margin-bottom:28px}.progress>div{height:100%;background:#6d8795;transition:.3s}
+.math{font-family:Cambria,"Times New Roman",serif;font-size:32px;text-align:center;margin:28px 0}.question{font-size:20px;line-height:1.5}
+.options{display:grid;gap:11px;margin-top:22px}.option{border:1px solid #ccd5db;background:#fff;text-align:left;padding:15px 17px}.option.selected{outline:2px solid #58798a;background:#f2f6f8}
+input{width:100%;max-width:280px;padding:13px;border:1px solid #bdc8cf;border-radius:9px;font-size:18px;margin-top:16px}
+.note{margin-top:17px;color:var(--muted);min-height:24px}.hidden{display:none}
+.profile{display:grid;gap:12px;margin:24px 0}.row{display:grid;grid-template-columns:180px 1fr;gap:12px;align-items:center}.bar{height:16px;background:#edf0f2;border-radius:10px;overflow:hidden}.fill{height:100%}
+.green{background:#5d8b68}.yellow{background:#c6a548}.red{background:#a96868}.tag{font-weight:650}
+.small{font-size:14px;color:var(--muted);line-height:1.5}
+@media(max-width:600px){main{padding:20px 12px}.card{padding:24px 18px}.row{grid-template-columns:1fr}.math{font-size:28px}}
+</style>
+</head>
+<body><main><section class="card" id="app"></section></main>
+<script>
+const tasks=[
+ {area:"Bruch als Anteil",q:"Welcher Bruch beschreibt den markierten Anteil?",visual:"● ● ● ○",opts:["1/4","2/4","3/4","4/3"],a:"3/4"},
+ {area:"Brüche vergleichen",q:"Welcher Bruch ist größer?",visual:"3/4  ?  2/3",opts:["3/4","2/3","gleich groß"],a:"3/4"},
+ {area:"Gleichwertige Brüche",q:"Welche Zahl fehlt?",visual:"2/3 = ?/12",opts:["6","8","9","10"],a:"8"},
+ {area:"Addieren",q:"Berechne.",visual:"1/4 + 2/4",opts:["3/8","3/4","2/8","1/2"],a:"3/4"},
+ {area:"Addieren",q:"Berechne.",visual:"1/2 + 1/3",opts:["2/5","2/6","5/6","1/5"],a:"5/6"},
+ {area:"Multiplizieren",q:"Berechne.",visual:"2/3 · 3/4",opts:["6/7","6/12","1/2","5/7"],a:"1/2"},
+ {area:"Bruchverständnis",q:"Welche Aussage stimmt?",visual:"5/4",opts:["Der Bruch ist kleiner als 1.","Der Bruch ist genau 1.","Der Bruch ist größer als 1."],a:"Der Bruch ist größer als 1."}
+];
+let i=0, answers=[], selected=null;
+const app=document.getElementById("app");
+
+function start(){
+ i=0;answers=[];selected=null;renderTask();
+}
+function home(){
+ app.innerHTML=`<h1>Bruchtrainer</h1>
+ <p class="lead">Kurze Diagnose zum Bruchverständnis. Die Aufgaben prüfen verschiedene Vorstellungen und Rechenideen. Während der Diagnose erhältst du noch keine Richtig-/Falsch-Rückmeldung.</p>
+ <div class="actions"><button class="primary" onclick="start()">Diagnose starten</button></div>
+ <p class="small" style="margin-top:28px">Bearbeite die Aufgaben möglichst ohne Hilfe. Am Ende erhältst du ein Diagnoseprofil.</p>`;
+}
+function renderTask(){
+ const t=tasks[i]; const pct=Math.round((i/tasks.length)*100);
+ app.innerHTML=`<div class="progress" aria-label="Fortschritt"><div style="width:${pct}%"></div></div>
+ <h2>${t.area}</h2><div class="question">${t.q}</div><div class="math">${t.visual}</div>
+ <div class="options">${t.opts.map((o,k)=>`<button class="option" data-v="${o.replaceAll('"','&quot;')}" onclick="pick(this)">${o}</button>`).join("")}</div>
+ <div class="note" id="note"></div>
+ <div class="actions"><button class="primary" id="next" onclick="save()" disabled>Antwort speichern</button></div>`;
+}
+function pick(el){
+ document.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));
+ el.classList.add("selected"); selected=el.dataset.v; document.getElementById("next").disabled=false;
+}
+function save(){
+ const t=tasks[i]; answers.push({area:t.area,ok:selected===t.a});
+ document.getElementById("note").textContent="Antwort gespeichert.";
+ selected=null;i++;
+ setTimeout(()=>{i<tasks.length?renderTask():result()},350);
+}
+function result(){
+ const areas={};
+ answers.forEach(x=>{areas[x.area]??={n:0,k:0};areas[x.area].n++;areas[x.area].k+=x.ok?1:0});
+ const rows=Object.entries(areas).map(([name,v])=>{
+   const p=v.k/v.n; const cls=p>=.8?"green":p>.5?"yellow":"red";
+   const txt=p>=.8?"sicher":p>.5?"noch festigen":"weiter aufbauen";
+   return `<div class="row"><div><span class="tag">${name}</span><br><span class="small">${txt}</span></div><div class="bar"><div class="fill ${cls}" style="width:${Math.max(15,p*100)}%"></div></div></div>`;
+ }).join("");
+ app.innerHTML=`<h1>Dein Diagnoseprofil</h1>
+ <p class="lead">Das Profil zeigt, welche Bereiche bereits sicher wirken und wo weiteres Üben sinnvoll ist.</p>
+ <div class="profile">${rows}</div>
+ <p class="small">Grün = sicher · Gelb = noch festigen · Rot = weiter aufbauen. Das Ergebnis ist eine Lernstandsorientierung und keine Note.</p>
+ <div class="actions"><button class="primary" onclick="start()">Noch einmal durchführen</button></div>`;
+}
+home();
+</script></body></html>
